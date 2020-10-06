@@ -1,4 +1,4 @@
-# tax-online-tool
+# Tax Online Uploader
 ***Các link access tax online tool***
 ## Default key e8e3fa20d2588dfb1d1281caaf94332c
 ## Method GET
@@ -24,7 +24,7 @@ Thứ tự: Tạo trình duyệt, nhận captcha => Đăng nhập, điền mã c
  - Nếu user đăng nhập thành công, upload thành công => Gọi hàm closeBrowser() đóng trình duyệt
 ***
 
-// Khởi tạo trình duyệt, hiển thị mã captcha cho người dùng nhập
+## Khởi tạo trình duyệt, hiển thị mã captcha cho người dùng nhập
 - Cấu trúc /?key={key}
 VD: http://192.168.11.55:3000?key=e8e3fa20d2588dfb1d1281caaf94332c
 Kết quả:
@@ -38,7 +38,7 @@ Kết quả:
 ```
 
 
-// Đăng nhập bằng tài khoản, captcha
+## Đăng nhập bằng tài khoản, captcha
 - Cấu trúc /login/{browser_id}/{captcha_text}/{username}/{password}?key={key}
 VD: http://192.168.11.55:3000/login/maUOjGMm/PAXC/0314609138-QL/pass123456?key=e8e3fa20d2588dfb1d1281caaf94332c
 Kết quả:
@@ -51,7 +51,7 @@ Kết quả:
 ```
 
 
-// Upload file XML
+## Upload file XML
 - Cấu trúc /upload-file/{browser_id}?url={link_xml_public}&key={key}
 VD: http://192.168.11.55:3000/upload-file/maUOjGMm?url=http://xuathoadon.net/HCM-0314609138000-BC26_AC-Q32020-L00.xml&key=e8e3fa20d2588dfb1d1281caaf94332c
 Kết quả:
@@ -63,7 +63,7 @@ Kết quả:
 }
 ```
 
-// Đóng trình duyệt
+## Đóng trình duyệt
 - Cấu trúc /close-browser/{browser_id}?key={key}
 VD: http://192.168.11.55:3000/close-browser/maUOjGMm?key=e8e3fa20d2588dfb1d1281caaf94332c
 Kết quả:
