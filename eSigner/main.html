@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!--
+ * Copyright 2013 The Chromium Authors. All rights reserved.  Use of this
+ * source code is governed by a BSD-style license that can be found in the
+ * LICENSE file.
+-->
+<html>
+  <head>
+    <script src='./main.js'></script>
+	<script src="./hwcrypto.js"></script>
+	<script src="./jquery.js"></script>
+	<script src="./hex2base.js"></script>
+	<script type="text/javascript">	
+	var arrError;
+	var flag = false;
+	var index = 0;
+ 	document.onreadystatechange = function() {
+		if (document.readyState === "complete") {
+			detect(fncInstalled,fncNotInstalled);
+		}
+	};	
+	function fncInstalled(){
+	var _TCTChromeSigning = new TCTChromeSigning();
+	_TCTChromeSigning.getVersion().then(function(message){
+		window.location.href = 'abc.com';
+	}, function(error) {
+		var a = "abc.com";
+		window.location.href = a;
+	});
+	}
+	function fncNotInstalled(){
+		alert('install di');
+	}
+	function detect(if_installed, if_not_installed) {
+		var base = 'chrome-extension://' + 'ekaaenaocpheoabajfdnkhiibfmfmloo';
+	    var s = document.createElement('script');
+	    s.onerror = if_not_installed;
+	    s.onload = if_installed;
+	    document.body.appendChild(s);
+	    s.src = base + '/page.js';
+	}	
+	</script>
+  </head>
+  <body>
+   <textarea id="txtInput" style="width:200px; height:200px;"></textarea>
+   <textarea id="txtOutput" style="width:200px; height:200px;"></textarea>
+   <br/>
+   <button id='sign-button'>Sign</button>
+    <button id='cert-button'>List Certificates</button>
+    <div id='response'>
+    </div>
+  </body>
+</html>
