@@ -2,7 +2,7 @@
 // https://thuedientu.gdt.gov.vn/etaxnnt/Request?&dse_sessionId=37o3Cd_RrtQpKRGGnyZUO49&dse_applicationId=-1&dse_pageId=9&dse_operationName=uploadTaxOnlineProc&dse_processorState=initial&dse_nextEventName=start
 // Status NopToKhai in javascript
 // https://thuedientu.gdt.gov.vn/etaxnnt/static/script/chrome/page.js
-const eSginer_path = "E://nodejs/tax-online-tool/eSigner";
+const eSginer_path = "D://tax-online-tool/eSigner";
 const key = "e8e3fa20d2588dfb1d1281caaf94332c";
 const puppeteer = require('puppeteer');
 const http = require('http');
@@ -98,12 +98,37 @@ async function eSigner(browser_id, filename) {
     if (pages.length == 2) {
         page = pages[1];
     }
+    try {
+        var tax_element = await page.$(".text_den");
+        var tax_id = await page.evaluate(tax_element => tax_element.textContent, tax_element);
+        if(tax_id != "") {
+            var attribute_arr = path.basename(filename).split("-");
+            if(attribute_arr[1].length == 10) {
+                var file_tax_id = attribute_arr[1]+"000";
+            } else {
+                var file_tax_id = attribute_arr[1];
+            }
+            if(tax_id.length == 10) {
+                tax_id = tax_id + "000";
+            }
+            
+            if(file_tax_id != tax_id) {
+                return false;
+            }
+        }
+    } catch(err) {
+        return false;
+    }
+    
     let session = await getSession(page);
-    let mouse = await page.mouse;
-    await mouse.click(677, 115, {delay: 200});
-    await delay(1500);
-    await mouse.click(839, 150, {delay: 200});
-    await delay(1000);
+    // await page.evaluate(_ => {
+    //     window.scrollBy(0, 0);
+    // });
+    // let mouse = await page.mouse;
+    // await mouse.click(677, 115, {delay: 200});
+    // await delay(1500);
+    // await mouse.click(839, 150, {delay: 200});
+    // await delay(1000);
 
     let url = "https://thuedientu.gdt.gov.vn/etaxnnt/Request?&dse_sessionId="+session+"&dse_applicationId=-1&dse_pageId=9&dse_operationName=uploadTaxOnlineProc&dse_processorState=initial&dse_nextEventName=start";
     // let url = "https://thuedientu.gdt.gov.vn/etaxnnt/Request?&dse_sessionId="+session+"&dse_applicationId=-1&dse_pageId=6&dse_operationName=corporateHomeProc&dse_errorPage=error_page.jsp&dse_processorState=initial&dse_nextEventName=start";
@@ -112,6 +137,7 @@ async function eSigner(browser_id, filename) {
     await newPage.goto(url);
     var real_name = path.basename(filename);
     var real_path = __dirname.replace("\\", "/") + "/xml/" + real_name;
+    
     let script = `
         $("#fullPathFileName").val('${real_path}');
         $("#tkhaiFormat").val("9");
@@ -127,6 +153,7 @@ async function eSigner(browser_id, filename) {
     await newPage.addScriptTag({"content": script});
     await delay(4000);
     let content = await newPage.content();
+    await newPage.close();
     if(content.search("frm_member") != -1) {
         return true;
     } else {
@@ -214,7 +241,7 @@ app.get('/upload-file/:browser_id', async (req, res) => {
             res.send({"id": browser_id, "status": true, "message": "Upload success"});
             return;
         } else {
-            res.send({"id": browser_id, "status": false, "message": "Upload timeout or content changed"});
+            res.send({"id": browser_id, "status": false, "message": "Content or filename invalid with this account, syntax required"});
             return;
         }
     } else {
