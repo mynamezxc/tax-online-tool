@@ -83,7 +83,7 @@ async function fillCaptchaAndLogin(browser_id, captcha, username, password) {
     if(content.search("btn_logout.gif") != -1 || content.search("Hệ thống đang thực hiện kiểm tra bản cập nhật. Vui lòng chờ trong giây lát") != -1) {
         return true;
     } else {
-        await page.screenshot({path: "public/captcha/"+browser_id+'.png', clip:{x: 945, y: 293, width: 74, height: 35}});
+        await page.screenshot({path: "public/captcha/"+browser_id+'.png', clip:{x: 944, y: 198, width: 74, height: 35}});
         return false;
     }
 }
