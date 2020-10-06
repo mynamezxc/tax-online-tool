@@ -205,12 +205,12 @@ app.get('/upload-file/:browser_id', async (req, res) => {
         });
         var uploaded = await eSigner(browser_id, filename);
         if(uploaded) {
-            try {
-                await closeBrowser(browsers[browser_id]);
-                delete browsers[browser_id];
-            } catch (error) {
-                response["error"] = error;
-            }
+            // try {
+            //     await closeBrowser(browsers[browser_id]);
+            //     delete browsers[browser_id];
+            // } catch (err) {
+            //     response["error"] = err;
+            // }
             res.send({"id": browser_id, "status": true, "message": "Upload success. Browser closed"});
             return;
         } else {
