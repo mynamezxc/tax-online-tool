@@ -1,7 +1,8 @@
 # Tax Online Uploader
-***Các link access tax online tool***
+
 ## Default key e8e3fa20d2588dfb1d1281caaf94332c
 ## Method GET
+***Access Function***
 ```
 # Browser init
 http://localhost:3000/?key={key}
