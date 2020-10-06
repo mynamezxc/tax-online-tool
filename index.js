@@ -2,6 +2,8 @@
 // https://thuedientu.gdt.gov.vn/etaxnnt/Request?&dse_sessionId=37o3Cd_RrtQpKRGGnyZUO49&dse_applicationId=-1&dse_pageId=9&dse_operationName=uploadTaxOnlineProc&dse_processorState=initial&dse_nextEventName=start
 // Status NopToKhai in javascript
 // https://thuedientu.gdt.gov.vn/etaxnnt/static/script/chrome/page.js
+const eSginer_path = "D://khaithue/eSigner";
+const key = "e8e3fa20d2588dfb1d1281caaf94332c";
 const puppeteer = require('puppeteer');
 const http = require('http');
 const express = require('express');
@@ -9,7 +11,6 @@ const fs = require('fs');
 const app = express()
 const port = 3000
 const path = require('path');
-const eSginer_path = "D://khaithue/eSigner";
 app.use(express.static('public'))
 var browsers = [];
 
@@ -135,6 +136,10 @@ async function eSigner(browser_id, filename) {
 
 app.get('/', async (req, res) => {
     var id = makeid(8);
+    if(req.query.key != key) {
+        res.send({"status": false, "message": "Key error"});
+        return;
+    }
     var browser = await createBrowser(id);
     if (browser) {
         browsers[id] = browser;
@@ -145,10 +150,17 @@ app.get('/', async (req, res) => {
 });
 
 app.get('/login/:browser_id/:captcha/:username/:password', async (req, res) => {
+
+    if(req.query.key != key) {
+        res.send({"status": false, "message": "Key error"});
+        return;
+    }
+    
     var browser_id = req.params.browser_id
     var captcha = req.params.captcha
     var username = req.params.username;
     var password = req.params.password;
+    
     if (browsers[browser_id] && captcha != "" && username != "" && password != "") {
         var logined = await fillCaptchaAndLogin(browser_id, captcha, username, password);
         if (!logined) {
@@ -169,6 +181,10 @@ app.get('/login/:browser_id/:captcha/:username/:password', async (req, res) => {
 });
 
 app.get('/upload-file/:browser_id', async (req, res) => {
+    if(req.query.key != key) {
+        res.send({"status": false, "message": "Key error"});
+        return;
+    }
     var browser_id = req.params.browser_id
     var url = req.query.url;
     var error = "";
@@ -196,8 +212,10 @@ app.get('/upload-file/:browser_id', async (req, res) => {
                 response["error"] = error;
             }
             res.send({"id": browser_id, "status": true, "message": "Upload success. Browser closed"});
+            return;
         } else {
             res.send({"id": browser_id, "status": false, "message": "Upload timeout or content changed"});
+            return;
         }
     } else {
         error = "Browser id not alive or file url invalid. Please try again.";
@@ -212,6 +230,10 @@ app.get('/upload-file/:browser_id', async (req, res) => {
 
 app.get("/close-browser/:browser_id", async (req, res) => {
     var browser_id = req.params.browser_id;
+    if(req.query.key != key) {
+        res.send({"status": false, "message": "Key error"});
+        return;
+    }
     var response = {"status": true, "message":"closed"}
     try {
         await closeBrowser(browsers[browser_id]);
