@@ -2,7 +2,7 @@
 // https://thuedientu.gdt.gov.vn/etaxnnt/Request?&dse_sessionId=37o3Cd_RrtQpKRGGnyZUO49&dse_applicationId=-1&dse_pageId=9&dse_operationName=uploadTaxOnlineProc&dse_processorState=initial&dse_nextEventName=start
 // Status NopToKhai in javascript
 // https://thuedientu.gdt.gov.vn/etaxnnt/static/script/chrome/page.js
-const eSginer_path = "D://khaithue/eSigner";
+const eSginer_path = "E://nodejs/tax-online-tool/eSigner";
 const key = "e8e3fa20d2588dfb1d1281caaf94332c";
 const puppeteer = require('puppeteer');
 const http = require('http');
