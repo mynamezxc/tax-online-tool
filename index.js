@@ -211,7 +211,7 @@ app.get('/upload-file/:browser_id', async (req, res) => {
             // } catch (err) {
             //     response["error"] = err;
             // }
-            res.send({"id": browser_id, "status": true, "message": "Upload success. Browser closed"});
+            res.send({"id": browser_id, "status": true, "message": "Upload success"});
             return;
         } else {
             res.send({"id": browser_id, "status": false, "message": "Upload timeout or content changed"});
