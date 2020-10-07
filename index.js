@@ -2,7 +2,7 @@
 // https://thuedientu.gdt.gov.vn/etaxnnt/Request?&dse_sessionId=37o3Cd_RrtQpKRGGnyZUO49&dse_applicationId=-1&dse_pageId=9&dse_operationName=uploadTaxOnlineProc&dse_processorState=initial&dse_nextEventName=start
 // Status NopToKhai in javascript
 // https://thuedientu.gdt.gov.vn/etaxnnt/static/script/chrome/page.js
-const eSginer_path = "D://tax-online-tool/eSigner";
+const eSginer_path = __dirname + "/eSigner";
 const key = "e8e3fa20d2588dfb1d1281caaf94332c";
 const puppeteer = require('puppeteer');
 const http = require('http');
@@ -41,7 +41,7 @@ async function createBrowser(id) {
         {
             args: [
                 // '--no-sandbox', '--disable-setuid-sandbox',
-                '--load-extension='+eSginer_path,
+                // '--load-extension='+eSginer_path,
                 '--disable-extensions-except='+eSginer_path
             ], headless: false
         }
@@ -50,7 +50,7 @@ async function createBrowser(id) {
         let url = "https://thuedientu.gdt.gov.vn"
         const page = await browser.newPage();
         await page.setViewport({ width: 1366, height: 768});
-        // await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:79.0) Gecko/20100101 Firefox/79.0');
+        await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36');
         await page.goto(url, {timeout: 30000, waitUntil: 'networkidle0' });
         let session = await getSession(page);
         // url = "https://thuedientu.gdt.gov.vn/etaxnnt/Request?&dse_sessionId="+session+"&dse_applicationId=-1&dse_pageId=3&dse_operationName=corpIndexProc&dse_errorPage=error_page.jsp&dse_processorState=initial&dse_nextEventName=home";
@@ -59,6 +59,7 @@ async function createBrowser(id) {
         await page.screenshot({path: "public/captcha/"+id+'.png', clip:{x: 944, y: 198, width: 74, height: 35}});
         return browser;
     } catch (error) {
+        console.log(error);
         await browser.close();
         return false;
     }
@@ -161,18 +162,27 @@ async function eSigner(browser_id, filename) {
     }
 }
 
-app.get('/', async (req, res) => {
-    var id = makeid(8);
+app.get('/:browser_id', async (req, res) => {
+    var browser_id = req.params.browser_id;
     if(req.query.key != key) {
         res.send({"status": false, "message": "Key error"});
         return;
     }
-    var browser = await createBrowser(id);
+    if(browsers[browser_id]) {
+        try {
+            await closeBrowser(browsers[browser_id]);
+            delete browsers[browser_id];
+            console.log("Reopen browser " + browser_id);
+        } catch (error) {
+            console.log("Browser close with error");
+        }
+    }
+    var browser = await createBrowser(browser_id);
     if (browser) {
         browsers[id] = browser;
         res.send({"id": id, "status": true, "message":  "Waiting for captcha", "image": "captcha/"+id+".png"});
     } else {
-        res.send({"id": id, "status": false, "message": "Connection timeout"});
+        res.send({"id": id, "status": false, "message": "Connection error"});
     }
 });
 
@@ -207,7 +217,7 @@ app.get('/login/:browser_id/:captcha/:username/:password', async (req, res) => {
     }
 });
 
-app.get('/upload-file/:browser_id', async (req, res) => {
+app.post('/upload-file/:browser_id', async (req, res) => {
     if(req.query.key != key) {
         res.send({"status": false, "message": "Key error"});
         return;

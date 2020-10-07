@@ -9,23 +9,25 @@ Thứ tự: Tạo trình duyệt, nhận captcha => Đăng nhập, điền mã c
 ***
 
 // Khởi tạo trình duyệt, hiển thị mã captcha cho người dùng nhập
-- Cấu trúc /?key={key}
-VD: http://192.168.11.55:3000?key=e8e3fa20d2588dfb1d1281caaf94332c
+- Cấu trúc /{browser_id}?key={key}
+Method: GET
+VD: http://192.168.11.55:3000/0309478306?key=e8e3fa20d2588dfb1d1281caaf94332c
 Kết quả:
 {
-    id: "maUOjGMm", // browser_id
+    id: "0309478306", // browser_id
     status: true, // Kết quả
     message: "Waiting for captcha", // Log kết quả
-    image: "captcha/maUOjGMm.png" // Link hình captcha trên API "192.168.11.55/captcha/maUOjGMm.png"
+    image: "captcha/0309478306.png" // Link hình captcha trên API "192.168.11.55/captcha/0309478306.png"
 }
 
 
 // Đăng nhập bằng tài khoản, captcha
 - Cấu trúc /login/{browser_id}/{captcha_text}/{username}/{password}?key={key}
-VD: http://192.168.11.55:3000/login/maUOjGMm/PAXC/0314609138-QL/pass123456?key=e8e3fa20d2588dfb1d1281caaf94332c
+Method: GET
+VD: http://192.168.11.55:3000/login/0309478306/PAXC/0314609138-QL/pass123456?key=e8e3fa20d2588dfb1d1281caaf94332c
 Kết quả:
 {
-    id: "maUOjGMm", // browser_id
+    id: "0309478306", // browser_id
     status: true, // Kết quả
     message: "Login success" // Log kết quả
 }
@@ -33,17 +35,22 @@ Kết quả:
 
 // Upload file XML
 - Cấu trúc /upload-file/{browser_id}?url={link_xml_public}&key={key}
-VD: http://192.168.11.55:3000/upload-file/maUOjGMm?url=http://xuathoadon.net/HCM-0314609138000-BC26_AC-Q32020-L00.xml&key=e8e3fa20d2588dfb1d1281caaf94332c
+Method: POST
+VD: http://192.168.11.55:3000/upload-file/0309478306?key=e8e3fa20d2588dfb1d1281caaf94332c
+Body: {
+    "file": base64_encode(file_content)
+}
 Kết quả:
 {
-    id: "maUOjGMm", // browser_id
+    id: "0309478306", // browser_id
     status: true, // Kết quả
     message: "Upload success. Browser closed" // Log kết quả
 }
 
 // Đóng trình duyệt
 - Cấu trúc /close-browser/{browser_id}?key={key}
-VD: http://192.168.11.55:3000/close-browser/maUOjGMm?key=e8e3fa20d2588dfb1d1281caaf94332c
+Method: GET
+VD: http://192.168.11.55:3000/close-browser/0309478306?key=e8e3fa20d2588dfb1d1281caaf94332c
 Kết quả:
 {
     status: true,
