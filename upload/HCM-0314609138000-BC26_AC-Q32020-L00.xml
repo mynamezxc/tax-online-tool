@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <HSoThueDTu xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://kekhaithue.gdt.gov.vn/TKhaiThue">
 	<HSoKhaiThue id="TS24-1d2b9707-aa2f-4124-b250-319dfaa6bd6c">
 		<TTinChung>
@@ -11,8 +11,8 @@
 			<TTinTKhaiThue>
 				<TKhaiThue>
 					<maTKhai>102</maTKhai>
-					<tenTKhai>Báo cáo tình hình sử dụng hóa đơn (BC26-AC)</tenTKhai>
-					<moTaBMau>(Ban hành kèm theo Thông tư số 39/2014/TT-BTC ngày 31/03/2014 của Bộ Tài chính)</moTaBMau>
+					<tenTKhai>BÃ¡o cÃ¡o tÃ¬nh hÃ¬nh sá»­ dá»¥ng hÃ³a ÄÆ¡n (BC26-AC)</tenTKhai>
+					<moTaBMau>(Ban hÃ nh kÃ¨m theo ThÃ´ng tÆ° sá» 39/2014/TT-BTC ngÃ y 31/03/2014 cá»§a Bá» TÃ i chÃ­nh)</moTaBMau>
 					<pbanTKhaiXML>2.0.8</pbanTKhaiXML>
 					<loaiTKhai>C</loaiTKhai>
 					<soLan>0</soLan>
@@ -25,21 +25,21 @@
 						<kyKKhaiDenThang />
 					</KyKKhaiThue>
 					<maCQTNoiNop>70113</maCQTNoiNop>
-					<tenCQTNoiNop>Quận 7 - Chi cục Thuế khu vực Quận 7 - Nhà Bè</tenCQTNoiNop>
+					<tenCQTNoiNop>Quáº­n 7 - Chi cá»¥c Thuáº¿ khu vá»±c Quáº­n 7 - NhÃ  BÃ¨</tenCQTNoiNop>
 					<ngayLapTKhai>2020-09-21</ngayLapTKhai>
-					<nguoiKy>Nguyễn Phan Việt Thủy</nguoiKy>
+					<nguoiKy>Nguyá»n Phan Viá»t Thá»§y</nguoiKy>
 					<ngayKy>2020-09-21</ngayKy>
 					<nganhNgheKD>1052</nganhNgheKD>
 				</TKhaiThue>
 				<NNT>
 					<mst>0314609138</mst>
-					<tenNNT>CÔNG TY CỔ PHẦN GIẢI PHÁP DU HỌC SCVN</tenNNT>
-					<dchiNNT>337/1A Lê Văn Lương, Phường Tân Quy</dchiNNT>
+					<tenNNT>CÃNG TY Cá» PHáº¦N GIáº¢I PHÃP DU Há»C SCVN</tenNNT>
+					<dchiNNT>337/1A LÃª VÄn LÆ°Æ¡ng, PhÆ°á»ng TÃ¢n Quy</dchiNNT>
 					<phuongXa />
 					<maHuyenNNT>70113</maHuyenNNT>
-					<tenHuyenNNT>Quận 7</tenHuyenNNT>
+					<tenHuyenNNT>Quáº­n 7</tenHuyenNNT>
 					<maTinhNNT>70100</maTinhNNT>
-					<tenTinhNNT>Tp. Hồ Chí Minh</tenTinhNNT>
+					<tenTinhNNT>Tp. Há» ChÃ­ Minh</tenTinhNNT>
 					<dthoaiNNT>028 22237125</dthoaiNNT>
 					<faxNNT />
 					<emailNNT>scvncorp@gmail.com</emailNNT>
@@ -54,7 +54,7 @@
 			<HoaDon>
 				<ChiTiet id="ID_1">
 					<maHoaDon>01GTKT</maHoaDon>
-					<tenHDon>Hóa đơn GTGT</tenHDon>
+					<tenHDon>HÃ³a ÄÆ¡n GTGT</tenHDon>
 					<kHieuMauHDon>01GTKT0/001</kHieuMauHDon>
 					<kHieuHDon>SC/17E</kHieuHDon>
 					<soTonMuaTrKy_tongSo>1343</soTonMuaTrKy_tongSo>
@@ -78,7 +78,7 @@
 				</ChiTiet>
 				<ChiTiet id="ID_2">
 					<maHoaDon>01GTKT</maHoaDon>
-					<tenHDon>Hóa đơn GTGT</tenHDon>
+					<tenHDon>HÃ³a ÄÆ¡n GTGT</tenHDon>
 					<kHieuMauHDon>01GTKT0/002</kHieuMauHDon>
 					<kHieuHDon>SC/19E</kHieuHDon>
 					<soTonMuaTrKy_tongSo>997</soTonMuaTrKy_tongSo>
@@ -105,9 +105,9 @@
 			<tongCongSDung>0</tongCongSDung>
 			<tongCongSoTonCKy>2340</tongCongSoTonCKy>
 			<nguoiLapBieu />
-			<nguoiDaiDien>Nguyễn Phan Việt Thủy</nguoiDaiDien>
+			<nguoiDaiDien>Nguyá»n Phan Viá»t Thá»§y</nguoiDaiDien>
 			<ngayBCao>2020-09-21</ngayBCao>
 		</CTieuTKhaiChinh>
 		<PLuc />
 	</HSoKhaiThue>
-<CKyDTu><Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI="#TS24-1d2b9707-aa2f-4124-b250-319dfaa6bd6c"><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>oQKqjGce44Meyt9xlwefjYPLftY=</DigestValue></Reference></SignedInfo><SignatureValue>QZOsAgJu+6gaMghBkSqX9a1XE2PbJcdDPwpRX+s0IuWAdln31oMEDawKYcjOP+8WwQBa8O7979+kSrT4A+RLxcUouucOvTMqT89v01pxoYiu1pm0tCyDDmUSHT8TNxNeEI9SsLX3/d7BhFYVw39cqb5ScchgQFERmN3YEMDjFr4=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>tzkXY2PbttJjt+YeZFUm3TSvfm5vafQbGEns114SWl1h7icc71fxlMYI9G3bnWbTnWd/4AvH0sd4vp/z749GkC8UjfqnSiwkKBCdBzUch8TgOhqzjr/aD0L1XxiHs3Hj7USB8h+G2Oo0Uvf/1m+DL6kKthGrMlWhqg2HT//KHkc=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509SubjectName>C=VN, L="337/1A Lê Văn Lương, Phường Tân Quy, Quận 7, Thành phố Hồ Chí Minh, Việt Nam", O=MST:0314609138, CN=CÔNG TY CỔ PHẦN GIẢI PHÁP DU HỌC SCVN, E=scvncorp@gmail.com</X509SubjectName><X509Certificate>MIIE/DCCA+SgAwIBAgIQVAEBCGPSsmAnciE/YE3TQDANBgkqhkiG9w0BAQUFADBXMQswCQYDVQQGEwJWTjEkMCIGA1UEChMbU0FGRS1DQSBKb2ludCBTdG9jayBDb21wYW55MRAwDgYDVQQLEwdTQUZFLUNBMRAwDgYDVQQDEwdTQUZFLUNBMB4XDTE4MDUyNDA4MzcwMFoXDTIyMDkyMjAxMzUwMFowgewxITAfBgkqhkiG9w0BCQEWEnNjdm5jb3JwQGdtYWlsLmNvbTE4MDYGA1UEAwwvQ8OUTkcgVFkgQ+G7lCBQSOG6pk4gR0nhuqJJIFBIw4FQIERVIEjhu4xDIFNDVk4xFzAVBgNVBAoMDk1TVDowMzE0NjA5MTM4MWcwZQYDVQQHDF4zMzcvMUEgTMOqIFbEg24gTMawxqFuZywgUGjGsOG7nW5nIFTDom4gUXV5LCBRdeG6rW4gNywgVGjDoG5oIHBo4buRIEjhu5MgQ2jDrSBNaW5oLCBWaeG7h3QgTmFtMQswCQYDVQQGEwJWTjCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAtzkXY2PbttJjt+YeZFUm3TSvfm5vafQbGEns114SWl1h7icc71fxlMYI9G3bnWbTnWd/4AvH0sd4vp/z749GkC8UjfqnSiwkKBCdBzUch8TgOhqzjr/aD0L1XxiHs3Hj7USB8h+G2Oo0Uvf/1m+DL6kKthGrMlWhqg2HT//KHkcCAwEAAaOCAbAwggGsMIG1BggrBgEFBQcBAQSBqDCBpTA3BggrBgEFBQcwAoYraHR0cDovL3B1YmxpYy5yb290Y2EuZ292LnZuL2NydC9taWNucmNhLmNydDBABggrBgEFBQcwAoY0aHR0cDovL3d3dy5zYWZlY2VydC5jb20udm4vd3d3L2NlcnQvU0FGRS1DQS0yMDE3LmNlcjAoBggrBgEFBQcwAYYcaHR0cDovL29jc3AxLnNhZmVjZXJ0LmNvbS52bjAdBgNVHQ4EFgQUhMeEwmoe3gjU4zaIJjFi+C5c1okwDAYDVR0TAQH/BAIwADAfBgNVHSMEGDAWgBT0DRR4wEhM2TramxpNX453CzaL5DBHBgNVHSAEQDA+MDwGCGCFQAMBAgMEMDAwLgYIKwYBBQUHAgEWImh0dHA6Ly93d3cuc2FmZWNlcnQuY29tLnZuL3d3dy9ycGEwLAYDVR0fBCUwIzAhoB+gHYYbaHR0cDovL2NybDEuc2FmZWNlcnQuY29tLnZuMA4GA1UdDwEB/wQEAwIE8DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwDQYJKoZIhvcNAQEFBQADggEBAByHkHEtV3JM2gZOcWvd01BdvZQgMR1cJXliwzrrTyOqTVpaYNLC0hKaqyWWmBVofArsaOQuVnMGIBBwj5WAh0F8lpCjPUJUmWIA99Yf0z9qOZDNnB45cjR1STNC31CO670VNpQ1ry3GUATwnkEnLLFuBfzg5RhQWyTgII6cNw+e+XUnIrtA6mgySPXQiRn73S2MOF/Ktn/JYQk55FnT8Xlbqe7mktl/wNkszaJuaQVxi4k6pG2Ys8owLxGnwsphf4r5HrVeUiEy5LXdQ5LuY+rWp8Kv6IHIrX90Y0+V66xeTssSDaAlQBx1TiE9hV9NbqnYml/E/+OKN20Z2gF5DCg=</X509Certificate></X509Data></KeyInfo></Signature></CKyDTu></HSoThueDTu>
+<CKyDTu><Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" /><Reference URI="#TS24-1d2b9707-aa2f-4124-b250-319dfaa6bd6c"><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" /><DigestValue>oQKqjGce44Meyt9xlwefjYPLftY=</DigestValue></Reference></SignedInfo><SignatureValue>QZOsAgJu+6gaMghBkSqX9a1XE2PbJcdDPwpRX+s0IuWAdln31oMEDawKYcjOP+8WwQBa8O7979+kSrT4A+RLxcUouucOvTMqT89v01pxoYiu1pm0tCyDDmUSHT8TNxNeEI9SsLX3/d7BhFYVw39cqb5ScchgQFERmN3YEMDjFr4=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>tzkXY2PbttJjt+YeZFUm3TSvfm5vafQbGEns114SWl1h7icc71fxlMYI9G3bnWbTnWd/4AvH0sd4vp/z749GkC8UjfqnSiwkKBCdBzUch8TgOhqzjr/aD0L1XxiHs3Hj7USB8h+G2Oo0Uvf/1m+DL6kKthGrMlWhqg2HT//KHkc=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509SubjectName>C=VN, L="337/1A LÃª VÄn LÆ°Æ¡ng, PhÆ°á»ng TÃ¢n Quy, Quáº­n 7, ThÃ nh phá» Há» ChÃ­ Minh, Viá»t Nam", O=MST:0314609138, CN=CÃNG TY Cá» PHáº¦N GIáº¢I PHÃP DU Há»C SCVN, E=scvncorp@gmail.com</X509SubjectName><X509Certificate>MIIE/DCCA+SgAwIBAgIQVAEBCGPSsmAnciE/YE3TQDANBgkqhkiG9w0BAQUFADBXMQswCQYDVQQGEwJWTjEkMCIGA1UEChMbU0FGRS1DQSBKb2ludCBTdG9jayBDb21wYW55MRAwDgYDVQQLEwdTQUZFLUNBMRAwDgYDVQQDEwdTQUZFLUNBMB4XDTE4MDUyNDA4MzcwMFoXDTIyMDkyMjAxMzUwMFowgewxITAfBgkqhkiG9w0BCQEWEnNjdm5jb3JwQGdtYWlsLmNvbTE4MDYGA1UEAwwvQ8OUTkcgVFkgQ+G7lCBQSOG6pk4gR0nhuqJJIFBIw4FQIERVIEjhu4xDIFNDVk4xFzAVBgNVBAoMDk1TVDowMzE0NjA5MTM4MWcwZQYDVQQHDF4zMzcvMUEgTMOqIFbEg24gTMawxqFuZywgUGjGsOG7nW5nIFTDom4gUXV5LCBRdeG6rW4gNywgVGjDoG5oIHBo4buRIEjhu5MgQ2jDrSBNaW5oLCBWaeG7h3QgTmFtMQswCQYDVQQGEwJWTjCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAtzkXY2PbttJjt+YeZFUm3TSvfm5vafQbGEns114SWl1h7icc71fxlMYI9G3bnWbTnWd/4AvH0sd4vp/z749GkC8UjfqnSiwkKBCdBzUch8TgOhqzjr/aD0L1XxiHs3Hj7USB8h+G2Oo0Uvf/1m+DL6kKthGrMlWhqg2HT//KHkcCAwEAAaOCAbAwggGsMIG1BggrBgEFBQcBAQSBqDCBpTA3BggrBgEFBQcwAoYraHR0cDovL3B1YmxpYy5yb290Y2EuZ292LnZuL2NydC9taWNucmNhLmNydDBABggrBgEFBQcwAoY0aHR0cDovL3d3dy5zYWZlY2VydC5jb20udm4vd3d3L2NlcnQvU0FGRS1DQS0yMDE3LmNlcjAoBggrBgEFBQcwAYYcaHR0cDovL29jc3AxLnNhZmVjZXJ0LmNvbS52bjAdBgNVHQ4EFgQUhMeEwmoe3gjU4zaIJjFi+C5c1okwDAYDVR0TAQH/BAIwADAfBgNVHSMEGDAWgBT0DRR4wEhM2TramxpNX453CzaL5DBHBgNVHSAEQDA+MDwGCGCFQAMBAgMEMDAwLgYIKwYBBQUHAgEWImh0dHA6Ly93d3cuc2FmZWNlcnQuY29tLnZuL3d3dy9ycGEwLAYDVR0fBCUwIzAhoB+gHYYbaHR0cDovL2NybDEuc2FmZWNlcnQuY29tLnZuMA4GA1UdDwEB/wQEAwIE8DAdBgNVHSUEFjAUBggrBgEFBQcDAgYIKwYBBQUHAwQwDQYJKoZIhvcNAQEFBQADggEBAByHkHEtV3JM2gZOcWvd01BdvZQgMR1cJXliwzrrTyOqTVpaYNLC0hKaqyWWmBVofArsaOQuVnMGIBBwj5WAh0F8lpCjPUJUmWIA99Yf0z9qOZDNnB45cjR1STNC31CO670VNpQ1ry3GUATwnkEnLLFuBfzg5RhQWyTgII6cNw+e+XUnIrtA6mgySPXQiRn73S2MOF/Ktn/JYQk55FnT8Xlbqe7mktl/wNkszaJuaQVxi4k6pG2Ys8owLxGnwsphf4r5HrVeUiEy5LXdQ5LuY+rWp8Kv6IHIrX90Y0+V66xeTssSDaAlQBx1TiE9hV9NbqnYml/E/+OKN20Z2gF5DCg=</X509Certificate></X509Data></KeyInfo></Signature></CKyDTu></HSoThueDTu>

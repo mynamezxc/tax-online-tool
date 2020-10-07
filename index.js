@@ -18,6 +18,7 @@ const base64 = require('base-64');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text({type: 'text/plain'}));
+app.set('view engine', 'ejs');
 
 const browser_options = [
     '--no-sandbox', '--disable-setuid-sandbox',
@@ -52,14 +53,14 @@ async function getSession(page) {
 async function createBrowser(id) {
     const browser = await puppeteer.launch(
         {
-            args: browser_options, headless: false
+            args: browser_options, headless: true
         }
     );
     try {
         let url = "https://thuedientu.gdt.gov.vn"
         const page = await browser.newPage();
         await page.setViewport({ width: 1366, height: 768});
-        await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36');
+        await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:81.0) Gecko/20100101 Firefox/81.0');
         await page.goto(url, {timeout: 30000, waitUntil: 'networkidle0' });
         let session = await getSession(page);
         // url = "https://thuedientu.gdt.gov.vn/etaxnnt/Request?&dse_sessionId="+session+"&dse_applicationId=-1&dse_pageId=3&dse_operationName=corpIndexProc&dse_errorPage=error_page.jsp&dse_processorState=initial&dse_nextEventName=home";
@@ -87,8 +88,16 @@ async function fillCaptchaAndLogin(browser_id, captcha, username, password) {
         $("#vcode").val("${captcha}");
         $("#loginForm").submit();
     `;
-    await page.addScriptTag({"content": script});
-    await page.waitForNavigation();
+    await page.evaluate((username, password, captcha) => {
+        document.querySelector('#_userName').value = username;
+        document.querySelector('#password').value = password;
+        document.querySelector('#vcode').value = captcha;
+        document.querySelector('#dangnhap').click();
+        // $("#loginForm").submit();
+    }, username, password, captcha);
+    // await page.addScriptTag({"content": script});
+    // await page.waitForNavigation();
+    await delay(3000);
     let content = await page.content();
     if(content.search("btn_logout.gif") != -1 || content.search("Hệ thống đang thực hiện kiểm tra bản cập nhật. Vui lòng chờ trong giây lát") != -1) {
         return true;
@@ -244,7 +253,7 @@ app.post('/upload-file/:browser_id', async (req, res) => {
     }
     var error = "";
     if (browsers[browser_id]) {
-        var uploaded = await eSigner(browser_id, filename);
+        var uploaded = await eSigner(browser_id, file_name);
         if(uploaded) {
             res.send({"id": browser_id, "status": true, "message": "Upload success"});
             return;
