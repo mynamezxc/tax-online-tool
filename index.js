@@ -7,11 +7,24 @@ const key = "e8e3fa20d2588dfb1d1281caaf94332c";
 const puppeteer = require('puppeteer');
 const http = require('http');
 const express = require('express');
+const bodyParser = require('body-parser');
+const parseJson = require('parse-json');
 const fs = require('fs');
-const app = express()
-const port = 3000
+const app = express();
+const port = 3000;
 const path = require('path');
-app.use(express.static('public'))
+const base64 = require('base-64');
+
+app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.text({type: 'text/plain'}));
+
+const browser_options = [
+    '--no-sandbox', '--disable-setuid-sandbox',
+    // '--load-extension='+eSginer_path,
+    '--disable-extensions-except='+eSginer_path,
+    // '--proxy-server='+proxy
+]
 var browsers = [];
 
 function delay(ms) {
@@ -39,11 +52,7 @@ async function getSession(page) {
 async function createBrowser(id) {
     const browser = await puppeteer.launch(
         {
-            args: [
-                // '--no-sandbox', '--disable-setuid-sandbox',
-                // '--load-extension='+eSginer_path,
-                '--disable-extensions-except='+eSginer_path
-            ], headless: false
+            args: browser_options, headless: false
         }
     );
     try {
@@ -137,7 +146,7 @@ async function eSigner(browser_id, filename) {
     await newPage.setViewport({ width: 1366, height: 768});
     await newPage.goto(url);
     var real_name = path.basename(filename);
-    var real_path = __dirname.replace("\\", "/") + "/xml/" + real_name;
+    var real_path = __dirname.replace("\\", "/") + "/upload/" + real_name;
     
     let script = `
         $("#fullPathFileName").val('${real_path}');
@@ -178,11 +187,12 @@ app.get('/:browser_id', async (req, res) => {
         }
     }
     var browser = await createBrowser(browser_id);
+    console.log("Browser generated with id " + browser_id);
     if (browser) {
-        browsers[id] = browser;
-        res.send({"id": id, "status": true, "message":  "Waiting for captcha", "image": "captcha/"+id+".png"});
+        browsers[browser_id] = browser;
+        res.send({"id": browser_id, "status": true, "message":  "Waiting for captcha", "image": "captcha/"+browser_id+".png"});
     } else {
-        res.send({"id": id, "status": false, "message": "Connection error"});
+        res.send({"id": browser_id, "status": false, "message": "Connection error"});
     }
 });
 
@@ -223,31 +233,19 @@ app.post('/upload-file/:browser_id', async (req, res) => {
         return;
     }
     var browser_id = req.params.browser_id
-    var url = req.query.url;
+    console.log(req.body);
+    var datas = parseJson(req.body);
+    if(datas["file"] && datas["file_name"]) {
+        var file_name = "./upload/" + datas["file_name"];
+        fs.writeFileSync(file_name, base64.decode(datas["file"]));
+    } else {
+        res.send({"id": browser_id, "status": false, "message": "Missing parameter file or file_content"});
+        return;
+    }
     var error = "";
-    var real_filename = path.basename(url);
-    const filename = "./xml/"+real_filename;
-    if (browsers[browser_id] && url != "") {
-        fs.open(filename, 'w', async function (err, file) {
-            if (err) {
-                error = "failed to create file " + filename + ". Error message: " + err;
-                console.log(error);
-            } else {
-                console.log('File is created successfully');
-            }
-        }); 
-        const file = fs.createWriteStream(filename);
-        const request = http.get(url, function(response) {
-            response.pipe(file);
-        });
+    if (browsers[browser_id]) {
         var uploaded = await eSigner(browser_id, filename);
         if(uploaded) {
-            // try {
-            //     await closeBrowser(browsers[browser_id]);
-            //     delete browsers[browser_id];
-            // } catch (err) {
-            //     response["error"] = err;
-            // }
             res.send({"id": browser_id, "status": true, "message": "Upload success"});
             return;
         } else {
@@ -255,7 +253,7 @@ app.post('/upload-file/:browser_id', async (req, res) => {
             return;
         }
     } else {
-        error = "Browser id not alive or file url invalid. Please try again.";
+        error = "Browser ID does not exists or died";
     }
 
     if (error != "") {
