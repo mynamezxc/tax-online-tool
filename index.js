@@ -1,3 +1,5 @@
+// Chromium path
+// D:\node_modules\puppeteer\.local-chromium\win64-800071\chrome-win
 // Form upload iframe
 // https://thuedientu.gdt.gov.vn/etaxnnt/Request?&dse_sessionId=37o3Cd_RrtQpKRGGnyZUO49&dse_applicationId=-1&dse_pageId=9&dse_operationName=uploadTaxOnlineProc&dse_processorState=initial&dse_nextEventName=start
 // Status NopToKhai in javascript
@@ -14,6 +16,7 @@ const app = express();
 const port = 3000;
 const path = require('path');
 const base64 = require('base-64');
+const utf8 = require('utf8');
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -21,10 +24,15 @@ app.use(bodyParser.text({type: 'text/plain'}));
 app.set('view engine', 'ejs');
 
 const browser_options = [
-    '--no-sandbox', '--disable-setuid-sandbox',
-    // '--load-extension='+eSginer_path,
+    '--no-sandbox',
+    '--disable-setuid-sandbox',
+    '--load-extension='+eSginer_path,
     '--disable-extensions-except='+eSginer_path,
-    // '--proxy-server='+proxy
+    // '--proxy-server='+proxy,
+    "--disable-infobars",
+    "--window-size=100,130",
+    "--disable-infobars",
+    "--window-position=99999,0"
 ]
 var browsers = [];
 
@@ -53,12 +61,16 @@ async function getSession(page) {
 async function createBrowser(id) {
     const browser = await puppeteer.launch(
         {
-            args: browser_options, headless: true
+            args: browser_options, headless: false, Devtools: false
         }
     );
     try {
+        let pages = await browser.pages();
+        var page = pages[0];
+        if (pages.length == 2) {
+            page = pages[1];
+        }
         let url = "https://thuedientu.gdt.gov.vn"
-        const page = await browser.newPage();
         await page.setViewport({ width: 1366, height: 768});
         await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:81.0) Gecko/20100101 Firefox/81.0');
         await page.goto(url, {timeout: 30000, waitUntil: 'networkidle0' });
@@ -82,12 +94,13 @@ async function fillCaptchaAndLogin(browser_id, captcha, username, password) {
         page = pages[1];
     }
     
-    let script = `
-        $("#_userName").val("${username}");
-        $("#password").val("${password}");
-        $("#vcode").val("${captcha}");
-        $("#loginForm").submit();
-    `;
+    // let script = `
+    //     $("#_userName").val("${username}");
+    //     $("#password").val("${password}");
+    //     $("#vcode").val("${captcha}");
+    //     $("#loginForm").submit();
+    // `;
+    // await page.addScriptTag({"content": script});
     await page.evaluate((username, password, captcha) => {
         document.querySelector('#_userName').value = username;
         document.querySelector('#password').value = password;
@@ -95,7 +108,7 @@ async function fillCaptchaAndLogin(browser_id, captcha, username, password) {
         document.querySelector('#dangnhap').click();
         // $("#loginForm").submit();
     }, username, password, captcha);
-    // await page.addScriptTag({"content": script});
+    
     // await page.waitForNavigation();
     await delay(3000);
     let content = await page.content();
@@ -157,22 +170,52 @@ async function eSigner(browser_id, filename) {
     var real_name = path.basename(filename);
     var real_path = __dirname.replace("\\", "/") + "/upload/" + real_name;
     
-    let script = `
-        $("#fullPathFileName").val('${real_path}');
-        $("#tkhaiFormat").val("9");
-        $("#fileName").val("${real_name}");
-        $("#fullPathFileName").val('${real_path}');
-        $("#tkhaiFormat").val("9");
-        $("#fileName").val("${real_name}");
-        setTimeout(function() {
-            checkSelectFileUpload();
-            // uploadFile();
-        }, 1000);
-    `;
-    await newPage.addScriptTag({"content": script});
-    await delay(4000);
-    let content = await newPage.content();
-    await newPage.close();
+    // let script = `
+    //     $("#fullPathFileName").val('${real_path}');
+    //     $("#tkhaiFormat").val("9");
+    //     $("#fileName").val("${real_name}");
+    //     $("#fullPathFileName").val('${real_path}');
+    //     $("#tkhaiFormat").val("9");
+    //     $("#fileName").val("${real_name}");
+    //     setTimeout(function() {
+    //         checkSelectFileUpload();
+    //         // uploadFile();
+    //     }, 1000);
+    // `;
+    // await newPage.addScriptTag({"content": script});
+    try {
+        var content = "";
+        var format = 0;
+        var ext = path.extname(real_name);
+        if(ext == ".xls") {
+            format = 5;
+        } else if(ext == ".xlsx") {
+            format = 6;
+        }  else if(ext == ".doc") {
+            format = 7;
+        } else if(ext == ".docx") {
+            format = 8;
+        } else if(ext == ".xml") {
+            format = 9;
+        } else if(ext == ".pdf") {
+            format = 1;
+        } else {
+            return false;
+        }
+        await newPage.evaluate((format, real_path, real_name) => {
+            document.querySelector('#fullPathFileName').value = real_path;
+            document.querySelector('#tkhaiFormat').value = format;
+            document.querySelector('#fileName').value = real_name;
+            document.querySelector('#uploadButton').click();
+        }, format, real_path, real_name);
+        await delay(8000);
+        content = await newPage.content();
+        await newPage.screenshot({path: "public/captcha/screenshort_"+browser_id+'.png'});
+        await newPage.close();
+        // return true;
+    } catch(err) {
+        await newPage.close();
+    }
     if(content.search("frm_member") != -1) {
         return true;
     } else {
@@ -246,7 +289,7 @@ app.post('/upload-file/:browser_id', async (req, res) => {
     var datas = parseJson(req.body);
     if(datas["file"] && datas["file_name"]) {
         var file_name = "./upload/" + datas["file_name"];
-        fs.writeFileSync(file_name, base64.decode(datas["file"]));
+        fs.writeFileSync(file_name, utf8.decode(base64.decode(datas["file"])));
     } else {
         res.send({"id": browser_id, "status": false, "message": "Missing parameter file or file_content"});
         return;
