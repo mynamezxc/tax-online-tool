@@ -34,11 +34,12 @@ Kết quả:
 
 
 // Upload file XML
-- Cấu trúc /upload-file/{browser_id}?url={link_xml_public}&key={key}
+- Cấu trúc /upload-file/{browser_id}?key={key}
 Method: POST
 VD: http://192.168.11.55:3000/upload-file/0309478306?key=e8e3fa20d2588dfb1d1281caaf94332c
 Body: {
-    "file": base64_encode(file_content)
+    "file": base64_encode(file_content),
+    "file_name": "example.xml"
 }
 Kết quả:
 {
@@ -46,6 +47,23 @@ Kết quả:
     status: true, // Kết quả
     message: "Upload success", // Log kết quả
     transaction_id: "11320200050417526" // Mã giao dịch (Dùng để upload phụ lục)
+}
+
+// Upload file Attachment
+- Cấu trúc /upload-attachment/{browser_id}?key={key}
+Method: POST
+VD: http://192.168.11.55:3000/upload-file/0309478306?key=e8e3fa20d2588dfb1d1281caaf94332c
+Body: {
+    "file": base64_encode(file_content),
+    "file_name": "example.xml",
+    "transaction_id": "21420200008774926",
+    "attachment_code": 322
+}
+Kết quả:
+{
+    id: "0309478306", // browser_id
+    status: true, // Kết quả
+    message: "Upload success", // Log kết quả
 }
 
 // Đóng trình duyệt
