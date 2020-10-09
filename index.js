@@ -1,9 +1,17 @@
+/*
+    Maintainer: Mynamezxc
+    Email: nguyennh.ts24@gmail.com
+    Version: v1.1
+    Date: 09-10-2020
+*/
 // Chromium path
 // D:\node_modules\puppeteer\.local-chromium\win64-800071\chrome-win
 // Form upload iframe
 // https://thuedientu.gdt.gov.vn/etaxnnt/Request?&dse_sessionId=37o3Cd_RrtQpKRGGnyZUO49&dse_applicationId=-1&dse_pageId=9&dse_operationName=uploadTaxOnlineProc&dse_processorState=initial&dse_nextEventName=start
 // Status NopToKhai in javascript
 // https://thuedientu.gdt.gov.vn/etaxnnt/static/script/chrome/page.js
+// Form upload attach
+// https://thuedientu.gdt.gov.vn/etaxnnt/Request?dse_sessionId="+session+"&dse_applicationId=-1&dse_operationName=traCuuToKhaiProc&dse_pageId=18&dse_processorState=viewTraCuuTkhai&dse_nextEventName=gui_phu_luc&tkhaiID="+transaction_id
 const eSginer_path = __dirname + "/eSigner";
 const key = "e8e3fa20d2588dfb1d1281caaf94332c";
 const puppeteer = require('puppeteer');
@@ -19,8 +27,9 @@ const base64 = require('base-64');
 const utf8 = require('utf8');
 
 app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.text({type: 'text/plain'}));
+app.use(bodyParser.json({limit: '50mb', extended: true}))
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}))
+app.use(bodyParser.text({limit: '50mb', type: 'text/plain'}));
 app.set('view engine', 'ejs');
 
 const browser_options = [
@@ -134,6 +143,9 @@ async function eSigner(browser_id, filename) {
         var tax_element = await page.$(".text_den");
         var tax_id = await page.evaluate(tax_element => tax_element.textContent, tax_element);
         if(tax_id != "") {
+            if(path.basename(filename).split("-").length != 5) {
+                return false;
+            }
             var attribute_arr = path.basename(filename).split("-");
             if(attribute_arr[1].length == 10) {
                 var file_tax_id = attribute_arr[1]+"000";
@@ -202,25 +214,42 @@ async function eSigner(browser_id, filename) {
         } else {
             return false;
         }
+        if(format != 9) {
+            return false;
+        }
         await newPage.evaluate((format, real_path, real_name) => {
             document.querySelector('#fullPathFileName').value = real_path;
             document.querySelector('#tkhaiFormat').value = format;
             document.querySelector('#fileName').value = real_name;
             document.querySelector('#uploadButton').click();
         }, format, real_path, real_name);
-        await delay(8000);
+        await delay(5000);
         content = await newPage.content();
-        await newPage.screenshot({path: "public/captcha/screenshort_"+browser_id+'.png'});
-        await newPage.close();
-        // return true;
+        try {
+            fs.unlink("./upload/"+real_name, (err) => {
+                if (err) {
+                    console.log("failed to delete local file:"+err);
+                } else {
+                    console.log('successfully deleted local file');                               
+                }
+            });
+            const data = await newPage.evaluate(() => {
+                const tds = Array.from(document.querySelectorAll('.tbl_member table tr td'))
+                return tds.map(td => td.innerText)
+            });
+            if(data[1]) {
+                console.log("Transaction no " + data[1].trim());
+                await newPage.close();
+                return data[1];
+            }
+        } catch(err) {
+            await newPage.close();
+            return false;
+        }
     } catch(err) {
         await newPage.close();
     }
-    if(content.search("frm_member") != -1) {
-        return true;
-    } else {
-        return false;
-    }
+    return false;
 }
 
 app.get('/:browser_id', async (req, res) => {
@@ -238,12 +267,14 @@ app.get('/:browser_id', async (req, res) => {
             console.log("Browser close with error");
         }
     }
+    browsers[browser_id] = "1";
     var browser = await createBrowser(browser_id);
     console.log("Browser generated with id " + browser_id);
     if (browser) {
         browsers[browser_id] = browser;
         res.send({"id": browser_id, "status": true, "message":  "Waiting for captcha", "image": "captcha/"+browser_id+".png"});
     } else {
+        delete browsers[browser_id];
         res.send({"id": browser_id, "status": false, "message": "Connection error"});
     }
 });
@@ -275,7 +306,7 @@ app.get('/login/:browser_id/:captcha/:username/:password', async (req, res) => {
             res.send({"id": browser_id, "status": true, "message": "Login success"});
         }
     } else {
-        res.send({"id": browser_id, "status": false, "message": "Missing parameters", "image": "captcha/"+browser_id+".png"});
+        res.send({"id": browser_id, "status": false, "message": "Missing parameters or browser busy", "image": "captcha/"+browser_id+".png"});
     }
 });
 
@@ -296,12 +327,12 @@ app.post('/upload-file/:browser_id', async (req, res) => {
     }
     var error = "";
     if (browsers[browser_id]) {
-        var uploaded = await eSigner(browser_id, file_name);
-        if(uploaded) {
-            res.send({"id": browser_id, "status": true, "message": "Upload success"});
+        var transaction = await eSigner(browser_id, file_name);
+        if(transaction) {
+            res.send({"id": browser_id, "status": true, "message": "Upload success", "transaction_id": transaction});
             return;
         } else {
-            res.send({"id": browser_id, "status": false, "message": "Content or filename invalid with this account, syntax required"});
+            res.send({"id": browser_id, "status": false, "message": "Content or filename is not support with this account, ext .xml and syntax required"});
             return;
         }
     } else {
@@ -313,6 +344,110 @@ app.post('/upload-file/:browser_id', async (req, res) => {
     } else {
         res.send({"id": browser_id, "status": true, "message": "Upload success"});
     }
+});
+
+app.post("/upload-attachment/:browser_id", async (req, res) => {
+    var response = {"status": false, "message": "Message sent to desktop"}
+    var browser_id = req.params.browser_id;
+    if(req.query.key != key) {
+        res.send({"status": false, "message": "Key error"});
+        return;
+    }
+    // && browsers[browser_id]
+    var datas = parseJson(req.body);
+    if(browser_id && browsers[browser_id] && datas["file"] && datas["file_name"] && datas["transaction_id"] && datas["attachment_code"]) {
+        var transaction_id = datas["transaction_id"];
+        var attachment_code = datas["attachment_code"];
+        if(datas["file"] && datas["file_name"]) {
+            var file_name = "./upload/" + datas["file_name"];
+            fs.writeFileSync(file_name, base64.decode(datas["file"]), 'binary');
+        } else {
+            res.send({"id": browser_id, "status": false, "message": "Missing parameter file or file_content"});
+            return;
+        }
+        var pages = await browsers[browser_id].pages();
+        var page = pages[0];
+        if (pages.length == 2) {
+            page = pages[1];
+        }
+
+        var session = await getSession(page);
+        var url = "https://thuedientu.gdt.gov.vn/etaxnnt/Request?dse_sessionId="+session+"&dse_applicationId=-1&dse_operationName=traCuuToKhaiProc&dse_pageId=18&dse_processorState=viewTraCuuTkhai&dse_nextEventName=gui_phu_luc&tkhaiID="+transaction_id;
+        let newPage = await browsers[browser_id].newPage();
+        await newPage.setViewport({ width: 1366, height: 768});
+        await newPage.goto(url);
+
+        var real_name = path.basename(file_name);
+        var real_path = __dirname.replace("\\", "/") + "/upload/" + real_name;
+        var ext = path.extname(real_name);
+        
+        if(ext == ".xls") {
+            format = 5;
+        } else if(ext == ".xlsx") {
+            format = 6;
+        }  else if(ext == ".doc") {
+            format = 7;
+        } else if(ext == ".docx") {
+            format = 8;
+        } else if(ext == ".pdf") {
+            format = 1;
+        } else {
+            response["status"] = false;
+            response["message"] = "This file is not support, XML PDF WORD EXCEL required";
+            res.send(response);
+            return;
+        }
+        await newPage.evaluate((attachment_code, format, real_name, real_path) => {
+            document.querySelector('#maPl').value = attachment_code;
+            document.querySelector('#fullPathFileName').value = real_path;
+            document.querySelector('#tkhaiFormat').value = format;
+            document.querySelector('#fileName').value = real_name;
+            document.querySelector('#uploadButton').click();
+        }, attachment_code, format, real_name, real_path);
+        await delay(4000);
+        var message = await newPage.evaluate(() => {
+            if(document.querySelector(".app_error")) {
+                return document.querySelector(".app_error").textContent.replace("\n", "").replace("\\n", "").trim();
+            }
+            return false;
+        });
+        fs.unlink("./upload/"+real_name, (err) => {
+            if (err) {
+                console.log("failed to delete local file:"+err);
+            } else {
+                console.log('successfully deleted local file');                               
+            }
+        });
+        if(message) {
+            response["status"] = false;
+            response["message"] = message;
+            await newPage.close();
+        } else {
+            try {
+                const data = await newPage.evaluate(() => {
+                    const tds = Array.from(document.querySelectorAll('table tr td'))
+                    return tds.map(td => td.innerText)
+                });
+                await newPage.close();
+                if(data.length >= 1) {
+                    response["status"] = true;
+                    response["message"] = "Upload success";
+                    res.send(response);
+                    return;
+                }
+            } catch(err) {
+                await newPage.close();
+                res.send(response);
+                return false;
+            }
+            res.send(response);
+        }
+    } else {
+        response["status"] = false;
+        response["message"] = "Missing parameter or browser does not exists";
+    }
+    
+    res.send(response);
 });
 
 app.get("/close-browser/:browser_id", async (req, res) => {

@@ -44,7 +44,8 @@ Kết quả:
 {
     id: "0309478306", // browser_id
     status: true, // Kết quả
-    message: "Upload success. Browser closed" // Log kết quả
+    message: "Upload success", // Log kết quả
+    transaction_id: "11320200050417526" // Mã giao dịch (Dùng để upload phụ lục)
 }
 
 // Đóng trình duyệt
