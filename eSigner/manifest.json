@@ -1,6 +1,6 @@
 {
    "background": {
-      "service_worker": "background.js"
+      "scripts": [ "background.js" ]
    },
    "content_scripts": [ {
       "all_frames": true,
@@ -19,19 +19,11 @@
       "48": "icon48.png"
    },
    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAn+X3jmobGv3VXAJmAocWiDRNGX3+LOdWRamULDa72WadplN+qjIFLeoMYYGzv/qbGTwYhdMIFBkFmKVT4uLC0B6xklm2MxHGEtVT0mxcYi4UOJeoObF9/qCj730xhBeKPfiG8MRspigX5A40gbwo4bCKmlDvcrPRrwwiWSyh1P4TclY4yj9ATVI5nea8k+sK8rxjODJL+TYNRYpGGNPAjok/xLJzN9jjRUreirBsR4Ff/fou1HGm2G6GtFz1IMgV7cdmJ8F5jwxNCMBbnc8dEU+1QEPgDrPVTlmxRCF6X4RhS5+2twPltMWDPaRoaWRx2W6lwkBjw4eiyNE9vVH4swIDAQAB",
-   "manifest_version": 3,
+   "manifest_version": 2,
    "minimum_chrome_version": "40.0",
    "name": "ESigner.Chrome.TCT",
-   "permissions": [ "contextMenus", "tabs", "nativeMessaging"],
-   "host_permissions": [
-      "*://*.thuedientu.gdt.gov.vn/*"
-   ],
+   "permissions": [ "contextMenus", "tabs", "nativeMessaging", "\u003Call_urls>" ],
    "update_url": "https://clients2.google.com/service/update2/crx",
    "version": "1.0.8",
-   "web_accessible_resources": [
-      {
-         "resources": [ "page.js", "checkPlugin.js" ],
-         "matches": [ "*://*.thuedientu.gdt.gov.vn/*" ]
-      }
-   ]
+   "web_accessible_resources": [ "page.js", "checkPlugin.js" ]
 }
