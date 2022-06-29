@@ -27,6 +27,9 @@ const port = 3999;
 const path = require('path');
 const base64 = require('base-64');
 const utf8 = require('utf8');
+const { type } = require('express/lib/response');
+const { resolve } = require('path');
+const { rejects } = require('assert');
 
 app.use(express.static('public'));
 app.use(bodyParser.json({limit: '50mb', extended: true}))
@@ -39,11 +42,10 @@ const browser_options = [
     '--disable-setuid-sandbox',
     '--load-extension='+eSginer_path,
     '--disable-extensions-except='+eSginer_path,
-    // '--proxy-server='+proxy,
     "--disable-infobars",
-    "--window-size=100,130",
+    "--window-size=1200,900",
     "--disable-infobars",
-    "--window-position=99999,0"
+    // "--window-position=99999,0"
 ]
 var browsers = [];
 
@@ -310,6 +312,159 @@ app.get('/login/:browser_id/:captcha/:username/:password', async (req, res) => {
     } else {
         res.send({"id": browser_id, "status": false, "message": "Missing parameters or browser busy", "image": "captcha/"+browser_id+".png"});
     }
+});
+
+app.get(["/search-document/:browser_id/:from_date/:to_date/:transaction_id", "/search-document/:browser_id/:from_date/:to_date"], async (req, res) => {
+    if(req.query.key != key) {
+        res.send({"status": false, "message": "Key error"});
+        return;
+    }
+
+    var browser_id = req.params.browser_id;
+    var from_date = req.params.from_date;
+    var to_date = req.params.to_date;
+    var transaction_id = "";
+    if ("transaction_id" in req.params) {
+        transaction_id = req.params.transaction_id;
+    }
+    
+    let pages = await browsers[browser_id].pages();
+    let page = pages[0];
+    if (pages.length == 2) {
+        page = pages[1];
+    }
+
+    if (browsers[browser_id]) {
+
+
+        var session = await getSession(page);
+        var url = "https://thuedientu.gdt.gov.vn/etaxnnt/Request?&dse_sessionId="+session+"&dse_applicationId=-1&dse_pageId=8&dse_operationName=traCuuToKhaiProc&dse_processorState=initial&dse_nextEventName=start#!"
+        var newPage = await browsers[browser_id].newPage();
+        const downloadPath = path.resolve(__dirname.replace("\\", "/") + '/public/files');
+        await newPage._client.send('Page.setDownloadBehavior', {
+            behavior: 'allow',
+            downloadPath: downloadPath 
+        });
+        await newPage.setViewport({ width: 1366, height: 768});
+        await newPage.goto(url);
+
+        await newPage.evaluate((from_date, to_date, transaction_id) => {
+            document.querySelector('#qryFromDate').value = from_date;
+            document.querySelector('#qryToDate').value = to_date;
+            if(typeof(transaction_id) != "undefined" && transaction_id.length >= 1) {
+                document.querySelector('#ma_gd').value = transaction_id;
+            }
+            // document.querySelector('#uploadButton').click();
+            validateForm();
+        }, from_date, to_date, transaction_id);
+        await delay(5000);
+        content = await newPage.content();
+        // var search_results = [];
+        const datas = await newPage.evaluate(async () => {
+            var response_searchs = [];
+            $("#allResultTableBody tr").each(async function(key, el) {
+                var td_list = $(el).find("td");
+                if(td_list.length >= 1) {
+                    var id = $(td_list[1]).text().trim();
+                    
+                    if (Number.isInteger(parseInt(id))) {
+                        // await downloadTkhai(id);
+                        response_searchs.push({
+                            processorId: $("input[name='dse_processorId']").val(),
+                            id: id,
+                            document_name: $(td_list[2]).text().trim(),
+                            period: $(td_list[3]).text().trim(),
+                            type_of_document: $(td_list[4]).text().trim(),
+                            submitted_times: $(td_list[5]).text().trim(),
+                            additional_times: $(td_list[6]).text().trim(),
+                            submitted_date: $(td_list[7]).text().trim(),
+                            submitted_organ: $(td_list[9]).text().trim(),
+                            status: $(td_list[10]).text().trim()
+                        })
+                        console.log(id);
+                    }
+                    
+                    
+                }
+            });
+            return response_searchs;
+        });
+
+        var tabs = [];
+        for (var i = 0; i < datas.length; i++) {
+            let url = "https://thuedientu.gdt.gov.vn/etaxnnt/Request?dse_sessionId="+session+"&dse_applicationId=-1&dse_operationName=traCuuToKhaiProc&dse_pageId=9&dse_processorState=viewTraCuuTkhai&dse_processorId="+datas[i]["processorId"]+"&dse_nextEventName=downTkhai&messageId="+datas[i]["id"];
+            tabs[i] = await browsers[browser_id].newPage();
+            const downloadPath = path.resolve('./public/files/');
+            await tabs[i]._client.send('Page.setDownloadBehavior', {
+                behavior: 'allow',
+                downloadPath: downloadPath 
+            });
+            await tabs[i].setViewport({ width: 1366, height: 768});
+
+            try {
+                await tabs[i].goto(url);
+            } catch(err) {
+
+                // Get file thong bao
+                if (fs.existsSync(downloadPath + "/ETAX"+ datas[i]["id"] + ".xml")) {
+                    datas[i]["file"] = fs.readFileSync(downloadPath + "/ETAX"+ datas[i]["id"] + ".xml", {encoding: 'base64'});
+                }
+                url = "https://thuedientu.gdt.gov.vn/etaxnnt/Request?dse_sessionId="+session+"&dse_applicationId=-1&dse_operationName=traCuuToKhaiProc&dse_pageId=15&dse_processorState=viewTraCuuTkhai&dse_processorId="+datas[i]["processorId"]+"&dse_nextEventName=viewTBao&ctMaGDich="+ datas[i]["id"];
+                await tabs[i].goto(url);
+
+                
+                var file_depend_ids = await tabs[i].evaluate(async () => {
+
+                    var id_list = [];
+                    var promises = [];
+
+                    await $("#tbl_tracuu tr").each(async function(key, el) {
+
+                        promises[key] = new Promise(
+                            setTimeout( async (resolve, reject) => {
+                                let td_list = $(el).find("td");
+                                let id = "";
+                                if(td_list.length >= 1) {
+                                    var html_submit = $(td_list[1]).html().trim();
+                                    var matches = await html_submit.match(/downloadFile\('([a-zA-Z0-9_-.]+)'\);/);
+                                    if (matches && matches.length > 1) {
+                                        id = matches[1];
+                                        await downloadFile(id);
+                                        resolve(id);
+                                    }
+                                }
+                            }, 1000)
+                        );
+
+                        promises[key].then(function(id) {
+                            id_list.push(id);
+                        });
+                        
+                    });
+                    return id_list;
+                });
+
+                await delay(1000);
+                datas[i]["file_depends"] = [];
+                for (var x = 0; x < file_depend_ids.length; x++) {
+                    if (fs.existsSync(downloadPath + "/ETAX"+ file_depend_ids[x]["id"] + ".xml")) {
+                        datas[i]["file_depends"].push(
+                            fs.readFileSync(downloadPath + "/ETAX"+ file_depend_ids[x]["id"] + ".xml", {encoding: 'base64'})
+                        );
+                    }
+                }
+
+                // Close
+                delete datas[i]["processorId"];
+                await tabs[i].close();
+            }
+            
+        }
+        res.send({"id": browser_id, "status": true, "message": "Search success", "results": datas});
+        // res.send({"id": browser_id, "status": false, "message": "Has an error occurred", "results": []});
+        await newPage.close();
+    }
+
 });
 
 app.post('/upload-file/:browser_id', async (req, res) => {

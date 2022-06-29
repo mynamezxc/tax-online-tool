@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><HSoThueDTu xmlns="http://kekhaithue.gdt.gov.vn/TKhaiThue" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <HSoKhaiThue id="_NODE_TO_SIGN">
+        <TTinChung>
+            <TTinDVu>
+                <maDVu>ETAX</maDVu>
+                <tenDVu>ETAX 1.0</tenDVu>
+                <pbanDVu>1.0</pbanDVu>
+                <ttinNhaCCapDVu>ETAX_TCT</ttinNhaCCapDVu>
+            </TTinDVu>
+            <TTinTKhaiThue>
+                <TKhaiThue>
+                    <maTKhai>102</maTKhai>
+                    <tenTKhai>Báo cáo tình hình sử dụng hóa đơn</tenTKhai>
+                    <moTaBMau/>
+                    <pbanTKhaiXML>2.0.8</pbanTKhaiXML>
+                    <loaiTKhai>C</loaiTKhai>
+                    <soLan>0</soLan>
+                    <KyKKhaiThue>
+                        <kieuKy>Q</kieuKy>
+                        <kyKKhai>3/2021</kyKKhai>
+                        <kyKKhaiTuNgay>01/07/2021</kyKKhaiTuNgay>
+                        <kyKKhaiDenNgay>30/09/2021</kyKKhaiDenNgay>
+                        <kyKKhaiTuThang/>
+                        <kyKKhaiDenThang/>
+                    </KyKKhaiThue>
+                    <maCQTNoiNop>70107</maCQTNoiNop>
+                    <tenCQTNoiNop>Chi cục Thuế Quận 4</tenCQTNoiNop>
+                    <ngayLapTKhai>10/10/2021</ngayLapTKhai>
+                    <nguoiKy>Nguyễn Quốc Cường</nguoiKy>
+                    <ngayKy>2021-10-10</ngayKy>
+                    <nganhNgheKD/>
+                </TKhaiThue>
+                <NNT>
+                    <mst>0305879586</mst>
+                    <tenNNT>CôNG TY TNHH HOàNG XA</tenNNT>
+                    <dchiNNT>Số 5 Đường 21</dchiNNT>
+                    <phuongXa/>
+                    <maHuyenNNT/>
+                    <tenHuyenNNT>Quận 4</tenHuyenNNT>
+                    <maTinhNNT/>
+                    <tenTinhNNT>Hồ Chí Minh</tenTinhNNT>
+                    <dthoaiNNT>0</dthoaiNNT>
+                    <faxNNT/>
+                    <emailNNT>ntphong24121991@gmail.com</emailNNT>
+                </NNT>
+            </TTinTKhaiThue>
+        </TTinChung>
+        <CTieuTKhaiChinh>
+            <kyBCaoCuoi>false</kyBCaoCuoi>
+            <chuyenDiaDiem>false</chuyenDiaDiem>
+            <ngayDauKyBC>2021-07-01</ngayDauKyBC>
+            <ngayCuoiKyBC>2021-09-30</ngayCuoiKyBC>
+            <HoaDon>
+                <ChiTiet id="0">
+                    <maHoaDon>01GTKT</maHoaDon>
+                    <tenHDon>Hóa đơn giá trị gia tăng</tenHDon>
+                    <kHieuMauHDon>01GTKT3/002</kHieuMauHDon>
+                    <kHieuHDon>HX/17P</kHieuHDon>
+                    <soTonMuaTrKy_tongSo>138</soTonMuaTrKy_tongSo>
+                    <soTonDauKy_tuSo>0000363</soTonDauKy_tuSo>
+                    <soTonDauKy_denSo>0000500</soTonDauKy_denSo>
+                    <muaTrongKy_tuSo/>
+                    <muaTrongKy_denSo/>
+                    <tongSoSuDung_tuSo>0000363</tongSoSuDung_tuSo>
+                    <tongSoSuDung_denSo>0000363</tongSoSuDung_denSo>
+                    <tongSoSuDung_cong>1</tongSoSuDung_cong>
+                    <soDaSDung>1</soDaSDung>
+                    <xoaBo_soLuong>0</xoaBo_soLuong>
+                    <xoaBo_so/>
+                    <mat_soLuong>0</mat_soLuong>
+                    <mat_so/>
+                    <huy_soLuong>0</huy_soLuong>
+                    <huy_so/>
+                    <tonCuoiKy_tuSo>0000364</tonCuoiKy_tuSo>
+                    <tonCuoiKy_denSo>0000500</tonCuoiKy_denSo>
+                    <tonCuoiKy_soLuong>137</tonCuoiKy_soLuong>
+                </ChiTiet>
+            </HoaDon>
+            <tongCongSoTonDKy>138</tongCongSoTonDKy>
+            <tongCongSDung>1</tongCongSDung>
+            <tongCongSoTonCKy>137</tongCongSoTonCKy>
+            <nguoiLapBieu>Nguyễn Quốc Cường</nguoiLapBieu>
+            <nguoiDaiDien>Nguyễn Quốc Cường</nguoiDaiDien>
+            <ngayBCao>2021-10-10</ngayBCao>
+        </CTieuTKhaiChinh>
+    </HSoKhaiThue>
+    <CKyDTu><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#WithComments"/><ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><ds:Reference URI="#_NODE_TO_SIGN"><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><ds:DigestValue>BwRHeOYe4abyDNs8Eoam3sZub2w=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>AQ36uhfS226DAceZ3Van4ejA/K64KaPpkhoUmSCrbjYK8uD+PenRAtkx5cTfJJtVcg/iSL4Y0p4/
+iLMtH1hn+oKxpztcuyG3K2fKicjuZulXej34z957IMpZqe0BY7zSlwjTsG0Q3xYifR4xTZ6Ijhdl
+F2wKKq6fHkv9qw7tiIQ=</ds:SignatureValue><ds:KeyInfo><ds:KeyValue><ds:RSAKeyValue><ds:Modulus>0NDimmoK2pE0+uXV31VMJBAMr4Rx0RJPjQep27Mbi+uWxxEN3ibcaPsVi8rl6YqQNoJlJXlZUsks
+7/DIz27xO6L6oJAJVcRbJw98nYk5LaeuvS9iUAHrPQGwRUVaugMQxG9S9qcg3llfslW0a1usVpuK
+7wgKvFMMmadCbhREkas=</ds:Modulus><ds:Exponent>AQAB</ds:Exponent></ds:RSAKeyValue></ds:KeyValue><ds:X509Data><ds:X509SubjectName>UID=MST:0305879586,CN=CÔNG TY TNHH HOÀNG XA,L=TPHCM,C=VN</ds:X509SubjectName><ds:X509Certificate>MIID4zCCAsugAwIBAgIQVAT//rcDP7MW1nIgG4iQADANBgkqhkiG9w0BAQUFADBOMQswCQYDVQQG
+EwJWTjESMBAGA1UEBwwJSMOgIE7hu5lpMRYwFAYDVQQKEw1WaWV0dGVsIEdyb3VwMRMwEQYDVQQD
+EwpWaWV0dGVsLUNBMB4XDTIxMDcyMzA0Mjg0OVoXDTIyMDcyMzA0Mjg0OVowXzELMAkGA1UEBhMC
+Vk4xDjAMBgNVBAcMBVRQSENNMSAwHgYDVQQDDBdDw5RORyBUWSBUTkhIIEhPw4BORyBYQTEeMBwG
+CgmSJomT8ixkAQEMDk1TVDowMzA1ODc5NTg2MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDQ
+0OKaagrakTT65dXfVUwkEAyvhHHREk+NB6nbsxuL65bHEQ3eJtxo+xWLyuXpipA2gmUleVlSySzv
+8MjPbvE7ovqgkAlVxFsnD3ydiTktp669L2JQAes9AbBFRVq6AxDEb1L2pyDeWV+yVbRrW6xWm4rv
+CAq8UwyZp0JuFESRqwIDAQABo4IBLjCCASowNQYIKwYBBQUHAQEEKTAnMCUGCCsGAQUFBzABhhlo
+dHRwOi8vb2NzcC52aWV0dGVsLWNhLnZuMB0GA1UdDgQWBBSeFOrnrR47c77858a6z6qgSpsNRjAM
+BgNVHRMBAf8EAjAAMB8GA1UdIwQYMBaAFP7LQRTpXafZMg3ksghc8VzstrK1MIGSBgNVHR8EgYow
+gYcwgYSgLqAshipodHRwOi8vY3JsLnZpZXR0ZWwtY2Eudm4vVmlldHRlbC1DQS12My5jcmyiUqRQ
+ME4xEzARBgNVBAMMClZpZXR0ZWwtQ0ExFjAUBgNVBAoMDVZpZXR0ZWwgR3JvdXAxEjAQBgNVBAcM
+CUjDoCBO4buZaTELMAkGA1UEBhMCVk4wDgYDVR0PAQH/BAQDAgXgMA0GCSqGSIb3DQEBBQUAA4IB
+AQCmmJHV7queW1xe/EQ1CZZ1SEx3WmaESKq35cU35M0SmUrN9KQ5U3dGkosXuPVahoi0nGPRoQgi
+jBlO4ce92rgJmi89rAUiXz5p/L68cY5U0h1DvGDnb9Rh/S7royvzqoX+c0+xECP0KE+iu5w6iO8O
+LzS7vheMvRlVRWEe/BtSIQMj5FU2onJ5evk/wma8kL03TNI1MtjmV1LkBgq9q0S/g6IIfLpfGGxu
+8kIzaewxGF5A5N4nrsMWxSjYSAGdHI8BwF7STPhcAsHbKlDffA4FisO+55/5SmkkSGnxAgMZyfGV
+QVaxpfdEJRiJSJXBVekLYNc/YOiFt53pCfNjMkU4</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature></CKyDTu>
+</HSoThueDTu>

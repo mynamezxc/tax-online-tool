@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><HSoThueDTu xmlns="http://kekhaithue.gdt.gov.vn/TKhaiThue" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <HSoKhaiThue id="_NODE_TO_SIGN">
+    <TTinChung>
+      <TTinDVu>
+        <maDVu>HTKK</maDVu>
+        <tenDVu>HỖ TRỢ KÊ KHAI THUẾ</tenDVu>
+        <pbanDVu>4.4.3</pbanDVu>
+        <ttinNhaCCapDVu>35ACA86B93498C2D681B16251C30D303</ttinNhaCCapDVu>
+      </TTinDVu>
+      <TTinTKhaiThue>
+        <TKhaiThue>
+          <maTKhai>102</maTKhai>
+          <tenTKhai>Báo cáo tình hình sử dụng hóa đơn (BC26/AC)</tenTKhai>
+          <moTaBMau>(Ban hành kèm theo Thông tư số 39/2014/TT-BTC  ngày 31/3/2014 của Bộ Tài chính)</moTaBMau>
+          <pbanTKhaiXML>2.0.8</pbanTKhaiXML>
+          <loaiTKhai>C</loaiTKhai>
+          <soLan>0</soLan>
+          <KyKKhaiThue>
+            <kieuKy>Q</kieuKy>
+            <kyKKhai>2/2020</kyKKhai>
+            <kyKKhaiTuNgay>01/04/2020</kyKKhaiTuNgay>
+            <kyKKhaiDenNgay>30/06/2020</kyKKhaiDenNgay>
+            <kyKKhaiTuThang/>
+            <kyKKhaiDenThang/>
+          </KyKKhaiThue>
+          <maCQTNoiNop>70107</maCQTNoiNop>
+          <tenCQTNoiNop>Chi cục Thuế Quận 4</tenCQTNoiNop>
+          <ngayLapTKhai>2020-08-15</ngayLapTKhai>
+          <GiaHan>
+            <maLyDoGiaHan>
+            </maLyDoGiaHan>
+            <lyDoGiaHan>
+            </lyDoGiaHan>
+          </GiaHan>
+          <nguoiKy>Nguyễn Quốc Cường 
+
+
+</nguoiKy>
+          <ngayKy>2020-08-15</ngayKy>
+          <nganhNgheKD>
+          </nganhNgheKD>
+        </TKhaiThue>
+        <NNT>
+          <mst>0305879586</mst>
+          <tenNNT>Công Ty Trách Nhiệm Hữu Hạn Hoàng Xa</tenNNT>
+          <dchiNNT>Số 5 Đường 21 Phường 4</dchiNNT>
+          <phuongXa>
+          </phuongXa>
+          <maHuyenNNT>
+          </maHuyenNNT>
+          <tenHuyenNNT>Quận 4</tenHuyenNNT>
+          <maTinhNNT>
+          </maTinhNNT>
+          <tenTinhNNT>Tp.HCM</tenTinhNNT>
+          <dthoaiNNT>02838383336</dthoaiNNT>
+          <faxNNT>
+          </faxNNT>
+          <emailNNT>ketoan@luatvu.vn</emailNNT>
+        </NNT>
+      </TTinTKhaiThue>
+    </TTinChung>
+    <CTieuTKhaiChinh>
+      <kyBCaoCuoi>0</kyBCaoCuoi>
+      <chuyenDiaDiem>0</chuyenDiaDiem>
+      <ngayDauKyBC>2020-04-01</ngayDauKyBC>
+      <ngayCuoiKyBC>2020-06-30</ngayCuoiKyBC>
+      <HoaDon>
+        <ChiTiet id="ID_1">
+          <maHoaDon>01GTKT</maHoaDon>
+          <tenHDon>Hóa đơn giá trị gia tăng</tenHDon>
+          <kHieuMauHDon>01GTKT3/002</kHieuMauHDon>
+          <kHieuHDon>HX/17P</kHieuHDon>
+          <soTonMuaTrKy_tongSo>184</soTonMuaTrKy_tongSo>
+          <soTonDauKy_tuSo>0000317</soTonDauKy_tuSo>
+          <soTonDauKy_denSo>0000500</soTonDauKy_denSo>
+          <muaTrongKy_tuSo>
+          </muaTrongKy_tuSo>
+          <muaTrongKy_denSo>
+          </muaTrongKy_denSo>
+          <tongSoSuDung_tuSo>0000317</tongSoSuDung_tuSo>
+          <tongSoSuDung_denSo>0000325</tongSoSuDung_denSo>
+          <tongSoSuDung_cong>9</tongSoSuDung_cong>
+          <soDaSDung>9</soDaSDung>
+          <xoaBo_soLuong>0</xoaBo_soLuong>
+          <xoaBo_so>
+          </xoaBo_so>
+          <mat_soLuong>0</mat_soLuong>
+          <mat_so>
+          </mat_so>
+          <huy_soLuong>0</huy_soLuong>
+          <huy_so>
+          </huy_so>
+          <tonCuoiKy_tuSo>0000326</tonCuoiKy_tuSo>
+          <tonCuoiKy_denSo>0000500</tonCuoiKy_denSo>
+          <tonCuoiKy_soLuong>175</tonCuoiKy_soLuong>
+        </ChiTiet>
+      </HoaDon>
+      <tongCongSoTonDKy>184</tongCongSoTonDKy>
+      <tongCongSDung>9</tongCongSDung>
+      <tongCongSoTonCKy>175</tongCongSoTonCKy>
+      <nguoiLapBieu>Nguyễn Quốc Cường</nguoiLapBieu>
+      <nguoiDaiDien>Nguyễn Quốc Cường</nguoiDaiDien>
+      <ngayBCao>2020-07-16</ngayBCao>
+    </CTieuTKhaiChinh>
+  </HSoKhaiThue>
+<CKyDTu><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/><ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><ds:Reference URI="#_NODE_TO_SIGN"><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><ds:DigestValue>deTeguWf4YIW0UyAFA2sjiB4mZk=</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>aH8+1q5RxpEE2SbSxEH0estvPmPhspnprR16q476MA4B66FblD5YErEN+fxYZwy6YtExu5bOPoTj
+L28JK4Hbe4h545KQBAWSKBVl3pPs/v/jSoC3Sjvkltbt2J4D556PD4k15wLwZ5EFLjdWpi1qD7S5
+p6fltDE0K+cvGdHNiYs=</ds:SignatureValue><ds:KeyInfo><ds:KeyValue><ds:RSAKeyValue><ds:Modulus>tT8TpWLcED70il5aua0FRRvTW902EnTBcwPUpZ2P9msRMTEC1SKmvvjvaBZgaPMvQchj7CNK6ynp
+rRkBBCyAvHbiuHl7/rR/dxmQQp03xTZsQhSJqh4A2RK0k1een6xeJx6uSwvMDPdM018CEFTm2VVy
+C4Q/cRLDzYPgARoWFPs=</ds:Modulus><ds:Exponent>AQAB</ds:Exponent></ds:RSAKeyValue></ds:KeyValue><ds:X509Data><ds:X509SubjectName>C=VN,L=TPHCM,CN=CÔNG TY TNHH HOÀNG XA,UID=MST:0305879586</ds:X509SubjectName><ds:X509Certificate>MIIDtDCCApygAwIBAgIQVAT//rcDP7MW1nIgG3r6HjANBgkqhkiG9w0BAQUFADA6MQswCQYDVQQG
+EwJWTjEWMBQGA1UEChMNVmlldHRlbCBHcm91cDETMBEGA1UEAxMKVmlldHRlbC1DQTAeFw0xODA1
+MjEwOTE1MjVaFw0yMDEwMDIwMjQyMjBaMF8xHjAcBgoJkiaJk/IsZAEBDA5NU1Q6MDMwNTg3OTU4
+NjEgMB4GA1UEAwwXQ8OUTkcgVFkgVE5ISCBIT8OATkcgWEExDjAMBgNVBAcMBVRQSENNMQswCQYD
+VQQGEwJWTjCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAtT8TpWLcED70il5aua0FRRvTW902
+EnTBcwPUpZ2P9msRMTEC1SKmvvjvaBZgaPMvQchj7CNK6ynprRkBBCyAvHbiuHl7/rR/dxmQQp03
+xTZsQhSJqh4A2RK0k1een6xeJx6uSwvMDPdM018CEFTm2VVyC4Q/cRLDzYPgARoWFPsCAwEAAaOC
+ARMwggEPMDUGCCsGAQUFBwEBBCkwJzAlBggrBgEFBQcwAYYZaHR0cDovL29jc3AudmlldHRlbC1j
+YS52bjAdBgNVHQ4EFgQUzuLQ7B698UHW2oNHI/6Us1IA9QAwDAYDVR0TAQH/BAIwADAfBgNVHSME
+GDAWgBQIYOYfGxTZSIALXqdccyUsIA351jB4BgNVHR8EcTBvMG2gK6AphidodHRwOi8vY3JsLnZp
+ZXR0ZWwtY2Eudm4vVmlldHRlbC1DQS5jcmyiPqQ8MDoxEzARBgNVBAMMClZpZXR0ZWwtQ0ExFjAU
+BgNVBAoMDVZpZXR0ZWwgR3JvdXAxCzAJBgNVBAYTAlZOMA4GA1UdDwEB/wQEAwIF4DANBgkqhkiG
+9w0BAQUFAAOCAQEAxylTNpwrkWdpBozTI9pPJTZlCTGc22AoljeLikjJPf2liCu0hjyjCYG+9oW+
+ZjZuyKI2ygcLtSSxvqdSXXjTTJoiVHnDtEvMhnMoewImFaEBhyJJorkBmi199I0ln+szDQCfP3WQ
+0D+w2fI+7ejE40QyCkJ8GBtS7AtR8HGYv4jZqXHjVt5F4Ta6xNHLidhXp7RjYwE8NNDYup9toDhm
+O0euVzjbusvxmNtrHiSvcheYQrWEYqqn9x19U5VBaEkiDBg/HO/dkMfN4IFWc9JuB8j4iursEJn5
+MrtroHemeG5dApvsmORkHSarZkT3jKd+++c1WsOggJ3UzJZoVTOSEA==</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature></CKyDTu></HSoThueDTu>
