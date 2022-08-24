@@ -1,3 +1,4 @@
+// Vui lòng nhấn nút "Trở lại" để về trang chủ
 /*
     Maintainer: Mynamezxc
     Email: nguyennh.ts24@gmail.com
@@ -30,6 +31,8 @@ const utf8 = require('utf8');
 const { type } = require('express/lib/response');
 const { resolve } = require('path');
 const { rejects } = require('assert');
+var $ = require( "jquery" );
+const { response } = require('express');
 
 app.use(express.static('public'));
 app.use(bodyParser.json({limit: '50mb', extended: true}))
@@ -91,7 +94,12 @@ async function createBrowser(id) {
         // url = "https://thuedientu.gdt.gov.vn/etaxnnt/Request?&dse_sessionId="+session+"&dse_applicationId=-1&dse_pageId=3&dse_operationName=corpIndexProc&dse_errorPage=error_page.jsp&dse_processorState=initial&dse_nextEventName=home";
         url = "https://thuedientu.gdt.gov.vn/etaxnnt/Request?&dse_sessionId="+session+"&dse_applicationId=-1&dse_pageId=7&dse_operationName=corpIndexProc&dse_errorPage=error_page.jsp&dse_processorState=initial&dse_nextEventName=login"
         await page.goto(url, {timeout: 30000, waitUntil: 'networkidle0' });
-        await page.screenshot({path: "public/captcha/"+id+'.png', clip:{x: 944, y: 198, width: 74, height: 35}});
+        
+        content = await page.content();
+        if (content.search("Mã xác nhận") != -1) {
+            await page.screenshot({path: "public/captcha/"+id+'.png', clip:{x: 944, y: 198, width: 74, height: 35}});
+        }
+        
         return browser;
     } catch (error) {
         console.log(error);
@@ -122,7 +130,7 @@ async function fillCaptchaAndLogin(browser_id, captcha, username, password) {
         // $("#loginForm").submit();
     }, username, password, captcha);
     
-    // await page.waitForNavigation();
+    await page.waitForNavigation();
     await delay(3000);
     let content = await page.content();
     if(content.search("btn_logout.gif") != -1 || content.search("Hệ thống đang thực hiện kiểm tra bản cập nhật. Vui lòng chờ trong giây lát") != -1) {
@@ -257,6 +265,8 @@ async function eSigner(browser_id, filename) {
 }
 
 app.get('/:browser_id', async (req, res) => {
+    // Open Browser
+    var browser_timeout = 600000 * 6; // 600 seconds
     var browser_id = req.params.browser_id;
     if(req.query.key != key) {
         res.send({"status": false, "message": "Key error"});
@@ -273,10 +283,32 @@ app.get('/:browser_id', async (req, res) => {
     }
     browsers[browser_id] = "1";
     var browser = await createBrowser(browser_id);
+    // Auto close browser after $browser_timeout/1000 seconds
+    setTimeout(() => {
+        closeBrowser(browsers[browser_id]);
+    }, browser_timeout);
     console.log("Browser generated with id " + browser_id);
     if (browser) {
         browsers[browser_id] = browser;
-        res.send({"id": browser_id, "status": true, "message":  "Waiting for captcha", "image": "captcha/"+browser_id+".png"});
+        var dt = new Date();
+        dt.setMinutes( dt.getMinutes() + (browser_timeout / 1000 / 60) );
+        var close_time = [
+            dt.getDate(),
+            dt.getMonth()+1,
+            dt.getFullYear()].join('/')+' '+
+           [dt.getHours(),
+            dt.getMinutes(),
+            dt.getSeconds()].join(':');
+        
+        try {
+            var image = "captcha/"+browser_id+".png";
+            if (!fs.existsSync(path)) {
+                image = "";
+            }
+        } catch(err) {
+            image = "";
+        }
+        res.send({"id": browser_id, "status": true, "message":  "Waiting for captcha", "image": image, "browser_close_time": close_time});
     } else {
         delete browsers[browser_id];
         res.send({"id": browser_id, "status": false, "message": "Connection error"});
@@ -327,143 +359,398 @@ app.get(["/search-document/:browser_id/:from_date/:to_date/:transaction_id", "/s
     if ("transaction_id" in req.params) {
         transaction_id = req.params.transaction_id;
     }
-    
-    let pages = await browsers[browser_id].pages();
-    let page = pages[0];
-    if (pages.length == 2) {
-        page = pages[1];
-    }
 
     if (browsers[browser_id]) {
 
 
+        let pages = await browsers[browser_id].pages();
+        let page = pages[0];
+        if (pages.length == 2) {
+            page = pages[1];
+        }
         var session = await getSession(page);
-        var url = "https://thuedientu.gdt.gov.vn/etaxnnt/Request?&dse_sessionId="+session+"&dse_applicationId=-1&dse_pageId=8&dse_operationName=traCuuToKhaiProc&dse_processorState=initial&dse_nextEventName=start#!"
-        var newPage = await browsers[browser_id].newPage();
-        const downloadPath = path.resolve(__dirname.replace("\\", "/") + '/public/files');
-        await newPage._client.send('Page.setDownloadBehavior', {
-            behavior: 'allow',
-            downloadPath: downloadPath 
-        });
-        await newPage.setViewport({ width: 1366, height: 768});
-        await newPage.goto(url);
-
-        await newPage.evaluate((from_date, to_date, transaction_id) => {
-            document.querySelector('#qryFromDate').value = from_date;
-            document.querySelector('#qryToDate').value = to_date;
-            if(typeof(transaction_id) != "undefined" && transaction_id.length >= 1) {
-                document.querySelector('#ma_gd').value = transaction_id;
+        var session_expired = await is_expired(browsers[browser_id], session);
+        if (session_expired) {
+    
+            // Get captcha and return
+    
+            var browser_timeout = 600000 * 6; // 600 seconds
+            var browser_id = req.params.browser_id;
+            if(req.query.key != key) {
+                res.send({"status": false, "message": "Key error"});
+                return;
             }
-            // document.querySelector('#uploadButton').click();
-            validateForm();
-        }, from_date, to_date, transaction_id);
-        await delay(5000);
-        content = await newPage.content();
-        // var search_results = [];
-        const datas = await newPage.evaluate(async () => {
-            var response_searchs = [];
-            $("#allResultTableBody tr").each(async function(key, el) {
-                var td_list = $(el).find("td");
-                if(td_list.length >= 1) {
-                    var id = $(td_list[1]).text().trim();
-                    
-                    if (Number.isInteger(parseInt(id))) {
-                        // await downloadTkhai(id);
-                        response_searchs.push({
-                            processorId: $("input[name='dse_processorId']").val(),
-                            id: id,
-                            document_name: $(td_list[2]).text().trim(),
-                            period: $(td_list[3]).text().trim(),
-                            type_of_document: $(td_list[4]).text().trim(),
-                            submitted_times: $(td_list[5]).text().trim(),
-                            additional_times: $(td_list[6]).text().trim(),
-                            submitted_date: $(td_list[7]).text().trim(),
-                            submitted_organ: $(td_list[9]).text().trim(),
-                            status: $(td_list[10]).text().trim()
-                        })
-                        console.log(id);
-                    }
-                    
-                    
+            if(browsers[browser_id]) {
+                try {
+                    await closeBrowser(browsers[browser_id]);
+                    delete browsers[browser_id];
+                    console.log("Reopen browser " + browser_id);
+                } catch (error) {
+                    console.log("Browser close with error");
                 }
-            });
-            return response_searchs;
-        });
+            }
+            browsers[browser_id] = "1";
+            var browser = await createBrowser(browser_id);
+            // Auto close browser after $browser_timeout/1000 seconds
+            setTimeout(() => {
+                closeBrowser(browsers[browser_id]);
+            }, browser_timeout);
+            console.log("Browser generated with id " + browser_id);
+            if (browser) {
+                browsers[browser_id] = browser;
+                var dt = new Date();
+                dt.setMinutes( dt.getMinutes() + (browser_timeout / 1000 / 60) );
+                var close_time = [
+                    dt.getDate(),
+                    dt.getMonth()+1,
+                    dt.getFullYear()].join('/')+' '+
+                [dt.getHours(),
+                    dt.getMinutes(),
+                    dt.getSeconds()].join(':');
+                
+                try {
+                    var image = "captcha/"+browser_id+".png";
+                    if (!fs.existsSync(path)) {
+                        image = "";
+                    }
+                } catch(err) {
+                    image = "";
+                }
+                res.send({"id": browser_id, "status": true, "message":  "Waiting for captcha", "image": image, "browser_close_time": close_time});
+            } else {
+                delete browsers[browser_id];
+                res.send({"id": browser_id, "status": false, "message": "Connection error"});
+            }
+    
+    
+        } else {
 
-        var tabs = [];
-        for (var i = 0; i < datas.length; i++) {
-            let url = "https://thuedientu.gdt.gov.vn/etaxnnt/Request?dse_sessionId="+session+"&dse_applicationId=-1&dse_operationName=traCuuToKhaiProc&dse_pageId=9&dse_processorState=viewTraCuuTkhai&dse_processorId="+datas[i]["processorId"]+"&dse_nextEventName=downTkhai&messageId="+datas[i]["id"];
-            tabs[i] = await browsers[browser_id].newPage();
-            const downloadPath = path.resolve('./public/files/');
-            await tabs[i]._client.send('Page.setDownloadBehavior', {
+            var url = "https://thuedientu.gdt.gov.vn/etaxnnt/Request?&dse_sessionId="+session+"&dse_applicationId=-1&dse_pageId=8&dse_operationName=traCuuToKhaiProc&dse_processorState=initial&dse_nextEventName=start#!"
+            var newPage = await browsers[browser_id].newPage();
+            const downloadPath = path.resolve(__dirname.replace("\\", "/") + '/public/files');
+            await newPage._client.send('Page.setDownloadBehavior', {
                 behavior: 'allow',
                 downloadPath: downloadPath 
             });
-            await tabs[i].setViewport({ width: 1366, height: 768});
+            await newPage.setViewport({ width: 1366, height: 768});
+            await newPage.goto(url);
 
-            try {
-                await tabs[i].goto(url);
-            } catch(err) {
+            await newPage.evaluate((from_date, to_date, transaction_id) => {
+                document.querySelector('#qryFromDate').value = from_date;
+                document.querySelector('#qryToDate').value = to_date;
+                if(typeof(transaction_id) != "undefined" && transaction_id.length >= 1) {
+                    document.querySelector('#ma_gd').value = transaction_id;
+                }
+                // document.querySelector('#uploadButton').click();
+                validateForm();
+            }, from_date, to_date, transaction_id);
 
-                // Get file thong bao
+            await delay(3000);
+            content = await newPage.content();
+            
+            // var search_results = [];
+            let datas = await newPage.evaluate(async () => {
+                var response_searchs = [];
+                $("#allResultTableBody tr").each(async function(key, el) {
+                    var td_list = $(el).find("td");
+                    if(td_list.length >= 1) {
+                        var id = $(td_list[1]).text().trim();
+                        
+                        if (Number.isInteger(parseInt(id))) {
+                            
+                            response_searchs.push({
+                                processorId: $("input[name='dse_processorId']").val(),
+                                id: id,
+                                document_type: $(td_list[2]).text().trim().split("-")[0],
+                                document_name: $(td_list[2]).text().trim(),
+                                period: $(td_list[3]).text().trim(),
+                                type_of_document: $(td_list[4]).text().trim(),
+                                submitted_times: $(td_list[5]).text().trim(),
+                                additional_times: $(td_list[6]).text().trim(),
+                                submitted_date: $(td_list[7]).text().trim(),
+                                submitted_organ: $(td_list[9]).text().trim(),
+                                status: $(td_list[10]).text().trim()
+                            })
+                            console.log(id);
+                        }
+                        
+                    }
+                });
+                return response_searchs;
+            });
+
+            console.log("LIST OF FILE: ");
+            console.log(datas);
+            console.log("--------------------------------------------------------");
+
+            var tabs = [];
+            for (var i = 0; i < datas.length; i++) {
+                let url = "https://thuedientu.gdt.gov.vn/etaxnnt/Request?dse_sessionId="+session+"&dse_applicationId=-1&dse_operationName=traCuuToKhaiProc&dse_pageId=9&dse_processorState=viewTraCuuTkhai&dse_processorId="+datas[i]["processorId"]+"&dse_nextEventName=downTkhai&messageId="+datas[i]["id"];
+                tabs[i] = await browsers[browser_id].newPage();
+                const downloadPath = path.resolve('./public/files/');
+                await tabs[i]._client.send('Page.setDownloadBehavior', {
+                    behavior: 'allow',
+                    downloadPath: downloadPath 
+                });
+                await tabs[i].setViewport({ width: 1366, height: 768});
+
+                // Get file to khai
+                await newPage.evaluate(async (file_id) => {
+                    if (Number.isInteger(parseInt(file_id))) {
+                        await downloadTkhai(file_id);
+                    }
+                }, datas[i]["id"]);
+                await delay(500);
                 if (fs.existsSync(downloadPath + "/ETAX"+ datas[i]["id"] + ".xml")) {
                     datas[i]["file"] = fs.readFileSync(downloadPath + "/ETAX"+ datas[i]["id"] + ".xml", {encoding: 'base64'});
+                    fs.unlinkSync(downloadPath + "/ETAX"+ datas[i]["id"] + ".xml");
                 }
-                url = "https://thuedientu.gdt.gov.vn/etaxnnt/Request?dse_sessionId="+session+"&dse_applicationId=-1&dse_operationName=traCuuToKhaiProc&dse_pageId=15&dse_processorState=viewTraCuuTkhai&dse_processorId="+datas[i]["processorId"]+"&dse_nextEventName=viewTBao&ctMaGDich="+ datas[i]["id"];
-                await tabs[i].goto(url);
-
+                // url = "https://thuedientu.gdt.gov.vn/etaxnnt/Request?dse_sessionId="+session+"&dse_applicationId=-1&dse_operationName=traCuuToKhaiProc&dse_pageId=15&dse_processorState=viewTraCuuTkhai&dse_processorId="+datas[i]["processorId"]+"&dse_nextEventName=viewTBao&ctMaGDich="+ datas[i]["id"];
+                // await tabs[i].goto(url);
                 
-                var file_depend_ids = await tabs[i].evaluate(async () => {
-
-                    var id_list = [];
-                    var promises = [];
-
-                    await $("#tbl_tracuu tr").each(async function(key, el) {
-
-                        promises[key] = new Promise(
-                            setTimeout( async (resolve, reject) => {
-                                let td_list = $(el).find("td");
-                                let id = "";
-                                if(td_list.length >= 1) {
-                                    var html_submit = $(td_list[1]).html().trim();
-                                    var matches = await html_submit.match(/downloadFile\('([a-zA-Z0-9_-.]+)'\);/);
-                                    if (matches && matches.length > 1) {
-                                        id = matches[1];
-                                        await downloadFile(id);
-                                        resolve(id);
-                                    }
-                                }
-                            }, 1000)
-                        );
-
-                        promises[key].then(function(id) {
-                            id_list.push(id);
-                        });
+                // var file_depend_ids = await tabs[i].evaluate(async () => {
+                //     var response_searchs = [];
+                //     $("#tbl_tracuu tr").each(async function(key, el) {
                         
-                    });
-                    return id_list;
-                });
+                //         var td_list = $(el).find("td");
+                //         if(td_list.length >= 1) {
+                //             var id = $(td_list[1]).text().trim();
+                //             var html_submit = $(td_list[1]).html().trim();
+                //             var matches = html_submit.match(/downloadFile\('([a-zA-Z0-9-_.]+)'\);/);
+                //             if (matches.length >= 2) {
+                //                 id = matches[1];
+                //             }
+                //             if (Number.isInteger(parseInt(id))) {
+                //                 // await downloadFile(id);
+                //                 response_searchs.push(id)
+                //             }
+                            
+                //         }
+                //     });
+                //     return response_searchs;
+                // });
 
-                await delay(1000);
-                datas[i]["file_depends"] = [];
-                for (var x = 0; x < file_depend_ids.length; x++) {
-                    if (fs.existsSync(downloadPath + "/ETAX"+ file_depend_ids[x]["id"] + ".xml")) {
-                        datas[i]["file_depends"].push(
-                            fs.readFileSync(downloadPath + "/ETAX"+ file_depend_ids[x]["id"] + ".xml", {encoding: 'base64'})
-                        );
-                    }
-                }
+                // for (let file_id of file_depend_ids) {
+                //     await tabs[i].evaluate(async (file_id) => {
+                //         if (Number.isInteger(parseInt(file_id))) {
+                //             await downloadFile(file_id);
+                //         }
+                //     }, file_id);
+                //     await delay(1500);
+                // }
+                // console.log("Document ID " + datas[i]["id"]);
+                // console.log("File depend list: ");
+                // console.log(file_depend_ids);
+
+                // // await delay(5000);
+                // datas[i]["file_depends"] = [];
+                // for (var x = 0; x < file_depend_ids.length; x++) {
+                //     if (fs.existsSync(downloadPath + "/ETAX"+ file_depend_ids[x] + ".xml")) {
+                //         datas[i]["file_depends"].push(
+                //             fs.readFileSync(downloadPath + "/ETAX"+ file_depend_ids[x] + ".xml", {encoding: 'base64'})
+                //         );
+                //         fs.unlinkSync(downloadPath + "/ETAX"+ file_depend_ids[x] + ".xml");
+                //     }
+                // }
 
                 // Close
                 delete datas[i]["processorId"];
                 await tabs[i].close();
+                
             }
-            
+            res.send({"id": browser_id, "status": true, "message": "Search success", "results": datas});
+            // res.send({"id": browser_id, "status": false, "message": "Has an error occurred", "results": []});
+            await newPage.close();
+
         }
-        res.send({"id": browser_id, "status": true, "message": "Search success", "results": datas});
-        // res.send({"id": browser_id, "status": false, "message": "Has an error occurred", "results": []});
-        await newPage.close();
     }
+
+});
+
+async function is_expired(browser, session) {
+    var url = "https://thuedientu.gdt.gov.vn/etaxnnt/Request?&dse_sessionId="+session+"&dse_applicationId=-1&dse_pageId=8&dse_operationName=corpUserInfoManageProc&dse_processorState=initial&dse_nextEventName=start#!";
+    let pages = await browser.pages();
+    let page = pages[0];
+    if (pages.length == 2) {
+        page = pages[1];
+    }
+    var newPage = await browser.newPage();
+    const downloadPath = path.resolve(__dirname.replace("\\", "/") + '/public/files');
+    await newPage._client.send('Page.setDownloadBehavior', {
+        behavior: 'allow',
+        downloadPath: downloadPath 
+    });
+    await newPage.setViewport({ width: 1366, height: 768});
+    await newPage.goto(url);
+
+    // await delay(3000);
+    content = await newPage.content();
+    if (content.search("Phiên giao dịch hết hạn") != -1 || content.search("Error 500: java.lang.NullPointerException") != -1) {
+        return true
+    }
+    await newPage.close();
+    return false
+}
+
+// Lấy thông báo theo id document
+app.get('/search-document-result/:browser_id/:transaction_id', async (req, res) => {
+
+    if(req.query.key != key) {
+        res.send({"status": false, "message": "Key error"});
+        return;
+    }
+    var datas = [];
+    var browser_id = req.params.browser_id;
+    // var from_date = req.params.from_date;
+    // var to_date = req.params.to_date;
+    var transaction_id = "";
+    if ("transaction_id" in req.params) {
+        transaction_id = req.params.transaction_id;
+    }
+
+    if (browsers[browser_id]) {
+        let pages = await browsers[browser_id].pages();
+        let page = pages[0];
+        if (pages.length == 2) {
+            page = pages[1];
+        }
+        var session = await getSession(page);
+        var session_expired = await is_expired(browsers[browser_id], session);
+        if (session_expired) {
+    
+            // Get captcha and return
+    
+            var browser_timeout = 600000 * 6; // 600 seconds
+            var browser_id = req.params.browser_id;
+            if(req.query.key != key) {
+                res.send({"status": false, "message": "Key error"});
+                return;
+            }
+            if(browsers[browser_id]) {
+                try {
+                    await closeBrowser(browsers[browser_id]);
+                    delete browsers[browser_id];
+                    console.log("Reopen browser " + browser_id);
+                } catch (error) {
+                    console.log("Browser close with error");
+                }
+            }
+            browsers[browser_id] = "1";
+            var browser = await createBrowser(browser_id);
+            // Auto close browser after $browser_timeout/1000 seconds
+            setTimeout(() => {
+                closeBrowser(browsers[browser_id]);
+            }, browser_timeout);
+            console.log("Browser generated with id " + browser_id);
+            if (browser) {
+                browsers[browser_id] = browser;
+                var dt = new Date();
+                dt.setMinutes( dt.getMinutes() + (browser_timeout / 1000 / 60) );
+                var close_time = [
+                    dt.getDate(),
+                    dt.getMonth()+1,
+                    dt.getFullYear()].join('/')+' '+
+                [dt.getHours(),
+                    dt.getMinutes(),
+                    dt.getSeconds()].join(':');
+                
+                try {
+                    var image = "captcha/"+browser_id+".png";
+                    if (!fs.existsSync(path)) {
+                        image = "";
+                    }
+                } catch(err) {
+                    image = "";
+                }
+                res.send({"id": browser_id, "status": true, "message":  "Waiting for captcha", "image": image, "browser_close_time": close_time});
+            } else {
+                delete browsers[browser_id];
+                res.send({"id": browser_id, "status": false, "message": "Connection error"});
+            }
+    
+    
+        }
+        else
+        {
+    
+            let pages = await browsers[browser_id].pages();
+            let page = pages[0];
+            if (pages.length == 2) {
+                page = pages[1];
+            }
+    
+            var url = "https://thuedientu.gdt.gov.vn/etaxnnt/Request?&dse_sessionId="+session+"&dse_applicationId=-1&dse_pageId=6&dse_operationName=traCuuTbaoTkhaiProc&dse_processorState=initial&dse_nextEventName=start#!"
+            var newPage = await browsers[browser_id].newPage();
+            const downloadPath = path.resolve(__dirname.replace("\\", "/") + '/public/files');
+            await newPage._client.send('Page.setDownloadBehavior', {
+                behavior: 'allow',
+                downloadPath: downloadPath 
+            });
+            await newPage.setViewport({ width: 1366, height: 768});
+            await newPage.goto(url);
+    
+            await newPage.evaluate((transaction_id) => {
+                if(typeof(transaction_id) != "undefined" && transaction_id.length >= 1) {
+                    document.querySelector('#ma_gd').value = transaction_id;
+                }
+                validateForm();
+            }, transaction_id);
+    
+            await delay(3000);
+            content = await newPage.content();
+    
+            datas = await newPage.evaluate(async () => {
+                var response_searchs = [];
+                $("#allResultTableBody tr").each(async function(key, el) {
+                    var td_list = $(el).find("td");
+                    if(td_list.length >= 1) {
+                        var file_id = "";
+                        var result_id_code = $(td_list[1]).text().trim();
+    
+                        var html_submit = $(td_list[5]).html().trim();
+                        var matches = html_submit.match(/downloadFile\('([a-zA-Z0-9-_.]+)'\);/);
+                        if (matches.length >= 2) {
+                            id = matches[1];
+                        }
+                        if (Number.isInteger(parseInt(id))) {
+                            file_id = id;
+                        }
+                        
+                        response_searchs.push({
+                            result_code: result_id_code,
+                            result_name: $(td_list[2]).text().trim(),
+                            file_id: file_id
+                        })
+                    }
+                });
+                return response_searchs;
+            });
+    
+            for (let file of datas) {
+                await newPage.evaluate(async (file_id) => {
+                    if (Number.isInteger(parseInt(file_id))) {
+                        await downloadFile(file_id);
+                    }
+                }, file["file_id"]);
+                await delay(1500);
+            }
+            // await delay(5000);
+            for (var x = 0; x < datas.length; x++) {
+                if (datas[x]["file_id"]) {
+                    if (fs.existsSync(downloadPath + "/ETAX"+ datas[x]["file_id"] + ".xml")) {
+                        datas[x]["files"].push(
+                            fs.readFileSync(downloadPath + "/ETAX"+ datas[x]["file_id"] + ".xml", {encoding: 'base64'})
+                        );
+                        fs.unlinkSync(downloadPath + "/ETAX"+ datas[x]["file_id"] + ".xml");
+                    }
+                }
+                
+            }
+            res.send({"id": browser_id, "status": true, "message": "Search success", "results": datas});
+            await newPage.close();
+        }
+    }
+    
 
 });
 
