@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?><HSoThueDTu xmlns="http://kekhaithue.gdt.gov.vn/TKhaiThue" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<HSoKhaiThue id="TS24-f2628787-5455-4db8-abd0-8f993722652b">
+		<TTinChung>
+			<TTinDVu>
+				<maDVu>00004</maDVu>
+				<tenDVu>TaxOnline</tenDVu>
+				<pbanDVu>1</pbanDVu>
+				<ttinNhaCCapDVu/>
+			</TTinDVu>
+			<TTinTKhaiThue>
+				<TKhaiThue>
+					<maTKhai>471</maTKhai>
+					<tenTKhai>Tờ khai khấu trừ thuế TNCN (01/XSBHĐC)(TT40/2021)</tenTKhai>
+					<moTaBMau>(Ban hành kèm theo Thông tư số 40/2021/TT-BTC ngày 01/6/2021 của Bộ trưởng Bộ Tài chính)</moTaBMau>
+					<pbanTKhaiXML>2.4.9</pbanTKhaiXML>
+					<loaiTKhai>B</loaiTKhai>
+					<soLan>2</soLan>
+					<KyKKhaiThue>
+						<kieuKy>M</kieuKy>
+						<kyKKhai>01/2022</kyKKhai>
+						<kyKKhaiTuNgay>01/01/2022</kyKKhaiTuNgay>
+						<kyKKhaiDenNgay>31/01/2022</kyKKhaiDenNgay>
+						<kyKKhaiTuThang/>
+						<kyKKhaiDenThang/>
+					</KyKKhaiThue>
+					<maCQTNoiNop>70100</maCQTNoiNop>
+					<tenCQTNoiNop>Cục thuế Thành phố Hồ Chí Minh</tenCQTNoiNop>
+					<ngayLapTKhai>2022-08-10</ngayLapTKhai>
+					<GiaHan>
+						<maLyDoGiaHan/>
+						<lyDoGiaHan/>
+					</GiaHan>
+					<nguoiKy>Nguyễn Văn A</nguoiKy>
+					<ngayKy>2022-08-03</ngayKy>
+					<nganhNgheKD/>
+				</TKhaiThue>
+				<NNT>
+					<mst>0309478306-999</mst>
+					<tenNNT>CONG TY CO PHAN TS24 (NO_EDIT)</tenNNT>
+					<dchiNNT>285/94B</dchiNNT>
+					<phuongXa>Phường 05</phuongXa>
+					<maHuyenNNT>70111</maHuyenNNT>
+					<tenHuyenNNT>Quận 6</tenHuyenNNT>
+					<maTinhNNT>70100</maTinhNNT>
+					<tenTinhNNT>Tp. Hồ Chí Minh</tenTinhNNT>
+					<dthoaiNNT>1234567890</dthoaiNNT>
+					<faxNNT/>
+					<emailNNT>ktpm.ts24@gmail.com</emailNNT>
+				</NNT>
+			</TTinTKhaiThue>
+		</TTinChung>
+		<CTieuTKhaiChinh>
+			<SoPSinhTKy>
+				<ct13>2222222</ct13>
+				<ct14>2222222</ct14>
+				<ct15>111111</ct15>
+				<ct16>111111</ct16>
+				<ct17>2222222</ct17>
+				<ct18>2222222</ct18>
+				<ct19>111111</ct19>
+				<ct20>111111</ct20>
+				<ct21>2222222</ct21>
+				<ct22>222222</ct22>
+				<ct23>222222</ct23>
+				<ct24>2222222</ct24>
+				<ct25>2222222</ct25>
+				<ct26>111111</ct26>
+				<ct27>111111</ct27>
+				<ct28>555555</ct28>
+			</SoPSinhTKy>
+			<SoLuyKe>
+				<ct13>3333333</ct13>
+				<ct14>3333333</ct14>
+				<ct15>166667</ct15>
+				<ct16>166667</ct16>
+				<ct17>3333333</ct17>
+				<ct18>3333333</ct18>
+				<ct19>166667</ct19>
+				<ct20>166667</ct20>
+				<ct21>3333333</ct21>
+				<ct22>333333</ct22>
+				<ct23>333333</ct23>
+				<ct24>3333333</ct24>
+				<ct25>3333333</ct25>
+				<ct26>166667</ct26>
+				<ct27>166667</ct27>
+				<ct28>833334</ct28>
+			</SoLuyKe>
+		</CTieuTKhaiChinh>
+		<PLuc>
+			<PLuc_01_1_BK_XSBHDC>
+				<XoSo>
+					<CTietXoSo id="ID_1">
+						<ct07>1111111</ct07>
+						<ct08>0102030405</ct08>
+						<ct09>423424242</ct09>
+						<ct10>3333333</ct10>
+						<ct11>3333333</ct11>
+						<ct12>166667</ct12>
+					</CTietXoSo>
+					<ct13>3333333</ct13>
+					<ct14>3333333</ct14>
+					<ct15>166667</ct15>
+				</XoSo>
+				<BaoHiem>
+					<CTietBaoHiem id="ID_1">
+						<ct07>222222</ct07>
+						<ct08>0102030405</ct08>
+						<ct09>423424242</ct09>
+						<ct10>3333333</ct10>
+						<ct11>3333333</ct11>
+						<ct12>166667</ct12>
+					</CTietBaoHiem>
+					<ct16>3333333</ct16>
+					<ct17>3333333</ct17>
+					<ct18>166667</ct18>
+				</BaoHiem>
+				<BHiemNThoBHiemKhongBatBuoc>
+					<CTietBaoHiem id="ID_1">
+						<ct07>333333</ct07>
+						<ct08>0102030405</ct08>
+						<ct09>0102030405</ct09>
+						<ct10>3333333</ct10>
+						<ct11>3333333</ct11>
+						<ct12>333333</ct12>
+					</CTietBaoHiem>
+					<ct19>3333333</ct19>
+					<ct20>3333333</ct20>
+					<ct21>333333</ct21>
+				</BHiemNThoBHiemKhongBatBuoc>
+				<BanHangDC>
+					<CTietBanHangDC id="ID_1">
+						<ct07>4444444</ct07>
+						<ct08>0102030405</ct08>
+						<ct09>423424242</ct09>
+						<ct10>3333333</ct10>
+						<ct11>3333333</ct11>
+						<ct12>166667</ct12>
+					</CTietBanHangDC>
+					<ct22>3333333</ct22>
+					<ct23>3333333</ct23>
+					<ct24>166667</ct24>
+				</BanHangDC>
+			</PLuc_01_1_BK_XSBHDC>
+			<PL01_KHBS>
+				<Header>
+					<maTKhai>471</maTKhai>
+					<tenTKhai>Tờ khai khấu trừ thuế TNCN (01/XSBHĐC)(TT40/2021)</tenTKhai>
+					<maGiaoDich>2222222</maGiaoDich>
+					<KyKKhaiThue>
+						<kieuKy>M</kieuKy>
+						<kyKKhai>01/2022</kyKKhai>
+						<kyKKhaiTuNgay>01/01/2022</kyKKhaiTuNgay>
+						<kyKKhaiDenNgay>31/01/2022</kyKKhaiDenNgay>
+						<kyKKhaiTuThang/>
+						<kyKKhaiDenThang/>
+					</KyKKhaiThue>
+					<soLan>2</soLan>
+					<mst>0309478306-999</mst>
+					<tenNNT>CONG TY CO PHAN TS24 (NO_EDIT)</tenNNT>
+					<mstDLyThue xsi:nil="true"/>
+					<tenDLyThue/>
+					<soHDongDLyThue/>
+					<ngayKyHDDLyThue xsi:nil="true"/>
+				</Header>
+				<ma_DonViTien>VND</ma_DonViTien>
+				<ten_DonViTien>Đồng Việt Nam</ten_DonViTien>
+				<Muc_A>
+					<Muc_I>
+						<Muc_1>
+							<ChiTiet id="ID_1">
+								<ct2_ma/>
+								<ct2_ten/>
+								<ct3>0</ct3>
+							</ChiTiet>
+							<tongCong_ct10>0</tongCong_ct10>
+						</Muc_1>
+						<Muc_2>
+							<DSachPLuc>
+								<BKePLuc id="ID_1">
+									<ma_PLuc/>
+									<ten_PLuc/>
+									<CTietPLuc>
+										<ChiTiet id="ID_1">
+											<ct2_ma/>
+											<ct2_ten/>
+											<ct3_ma/>
+											<ct3_ten/>
+											<ct04_ma/>
+											<ct04_ten/>
+											<ct05_ma/>
+											<ct05_ten/>
+											<ct06_ma/>
+											<ct06_ten/>
+											<ct7>0</ct7>
+										</ChiTiet>
+									</CTietPLuc>
+								</BKePLuc>
+								<tongCong_ct11>0</tongCong_ct11>
+							</DSachPLuc>
+						</Muc_2>
+						<Muc_3>
+							<ct3a_1>2022-08-03</ct3a_1>
+							<ct3a_2>163</ct3a_2>
+							<ct3b>0</ct3b>
+						</Muc_3>
+					</Muc_I>
+					<Muc_II>
+						<ChiTiet id="ID_1">
+							<ct2_ma/>
+							<ct2_ten/>
+							<ct3>0</ct3>
+						</ChiTiet>
+						<tongCong_ct12>0</tongCong_ct12>
+					</Muc_II>
+					<Muc_III>
+						<ChiTiet id="ID_1">
+							<ct2_ma/>
+							<ct2_ten/>
+							<ct3>0</ct3>
+						</ChiTiet>
+						<tongCong_ct13>0</tongCong_ct13>
+					</Muc_III>
+				</Muc_A>
+				<Muc_B>
+					<Muc_I>
+						<ct_1>0</ct_1>
+						<ct_2_so/>
+						<ct_2_ngay xsi:nil="true"/>
+						<ct_2_CQT_ma/>
+						<ct_2_CQT_ten/>
+						<ct_3_so/>
+						<ct_3_ngay xsi:nil="true"/>
+					</Muc_I>
+					<Muc_II>
+						<ct_1>0</ct_1>
+						<ct_2>0</ct_2>
+					</Muc_II>
+				</Muc_B>
+			</PL01_KHBS>
+			<PL01_1_KHBS>
+				<Header>
+					<maTKhai>471</maTKhai>
+					<tenTKhai>Tờ khai khấu trừ thuế TNCN (01/XSBHĐC)(TT40/2021)</tenTKhai>
+					<maGiaoDich>2222222</maGiaoDich>
+					<KyKKhaiThue>
+						<kieuKy>M</kieuKy>
+						<kyKKhai>01/2022</kyKKhai>
+						<kyKKhaiTuNgay>01/01/2022</kyKKhaiTuNgay>
+						<kyKKhaiDenNgay>31/01/2022</kyKKhaiDenNgay>
+						<kyKKhaiTuThang/>
+						<kyKKhaiDenThang/>
+					</KyKKhaiThue>
+					<soLan>2</soLan>
+					<mst>0309478306-999</mst>
+					<tenNNT>CONG TY CO PHAN TS24 (NO_EDIT)</tenNNT>
+					<mstDLyThue xsi:nil="true"/>
+					<tenDLyThue/>
+					<soHDongDLyThue/>
+					<ngayKyHDDLyThue xsi:nil="true"/>
+				</Header>
+				<ma_DonViTien>VND</ma_DonViTien>
+				<ten_DonViTien>Đồng Việt Nam</ten_DonViTien>
+				<Muc_A>
+					<DSachHSo>
+						<BKeHSo id="ID_1">
+							<ma_HSo/>
+							<ten_HSo/>
+							<CTietHSo>
+								<ChiTiet id="ID_1">
+									<ct2_ma/>
+									<ct2_ten/>
+									<ct3_ma/>
+									<ct3_ten/>
+									<ct3_1_ma/>
+									<ct3_1_ten/>
+									<ct3_2_ma/>
+									<ct3_2_ten/>
+									<ct04>0</ct04>
+									<ct05>0</ct05>
+									<ct06>0</ct06>
+									<ct7>0</ct7>
+									<ct8/>
+								</ChiTiet>
+							</CTietHSo>
+						</BKeHSo>
+						<TongCong>
+							<tongCong_7>0</tongCong_7>
+							<tongCong_8>0</tongCong_8>
+							<tongCong_9>0</tongCong_9>
+						</TongCong>
+					</DSachHSo>
+				</Muc_A>
+				<Muc_B>
+					<CTietTaiLieu id="ID_1">
+						<ma_TLieu/>
+						<ten_TLieu/>
+					</CTietTaiLieu>
+				</Muc_B>
+			</PL01_1_KHBS>
+		</PLuc>
+	</HSoKhaiThue>
+<CKyDTu><Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/><Reference URI="#TS24-f2628787-5455-4db8-abd0-8f993722652b"><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><DigestValue>foV0arjfN5XU2GCoa7UHCkrI6gHoM8OS98vQfQAJisM=</DigestValue></Reference></SignedInfo><SignatureValue>YgUXhF2JOPS/hihocS9j0atlI9g5SmOblzMgJkOE7TG1jyeqfSGIZDlqJhPe4BZi2TBXEN4jyzDJvs53tr2mZmdMbYi4Br/IY/JWQEXCEOp/NB039Xmfxe7aEHXlJkOW46fyNHasweNWj7Qv8kUIWWhGEm8ElqY+Pc7Osw7FBdkTM302M0JDX9lVG5W591Ahg9rkdr4PyWYEF8IB1pNo1rmY2ekDzaJwA049A9Oy7uNclrmUoMbbHC99J4dvMh9eJOh9+bOMpTTEmaj+msHlyiHLoQHJ1vgkzJi6alIHKYDkOQI+FJDrk8hQZfQg/5y+J1mzeFTD0q/V4kBKhFN9PA==</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>sDkv4VU9t+FDvOIO7AHn5pl/lfCaSSfq6xGnN8pVqVEMGTRCcDmjoPSj4Lt4k7alx8jK502fT+cnX9I835HRc2kwDzpmdtLyhBgbmvt+en5XRLYPPD5HxvnFKsvH4SPkXZAUQ+WFkllOMXwW0toQVuAXt4lMH53F3kC1Nvf/JdAV+omUAFSRp9OL+jkyfwxavNNAcPNqxyeb599MYqnwJBcStaIQQvIP04WOCIHkiFuQBYwE3Kg/ZvAHNp/3qYSGGkhbtv5KtxrvZvODWBn7uM8aaXQEQz1INX4T7+CtMoBLkuUk97pF5cDpFV8JsU3EuC5mG4EmQgq9FX0v/sVRZQ==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509SubjectName>C=VN, S=TP Hồ Chí Minh, L=Chữ ký số dùng để test phần mềm TS24, O=Phòng kiểm thử TS24, CN=Phòng kiểm thử TS24, OID.0.9.2342.19200300.100.1.1=MST:0309478306-999, E=ktpm.ts24@gmail.com</X509SubjectName><X509Certificate>MIIFpDCCBIygAwIBAgIQVAEBCFgvW11yTKReHKrIfzANBgkqhkiG9w0BAQsFADBRMQswCQYDVQQGEwJWTjEjMCEGA1UECgwaU0FGRVRZIENFUlRJRlkgQ09SUE9SQVRJT04xHTAbBgNVBAMMFFNBRkUtQ0EgU0hBLTI1NiAyMDIwMB4XDTIyMDYyMTAxMTI0MloXDTI1MDkyMTAxMTI0MlowgfMxIjAgBgkqhkiG9w0BCQEWE2t0cG0udHMyNEBnbWFpbC5jb20xIjAgBgoJkiaJk/IsZAEBDBJNU1Q6MDMwOTQ3ODMwNi05OTkxITAfBgNVBAMMGFBow7JuZyBraeG7g20gdGjhu60gVFMyNDEhMB8GA1UECgwYUGjDsm5nIGtp4buDbSB0aOG7rSBUUzI0MTowOAYDVQQHDDFDaOG7ryBrw70gc+G7kSBkw7luZyDEkeG7gyB0ZXN0IHBo4bqnbiBt4buBbSBUUzI0MRowGAYDVQQIDBFUUCBI4buTIENow60gTWluaDELMAkGA1UEBhMCVk4wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCwOS/hVT234UO84g7sAefmmX+V8JpJJ+rrEac3ylWpUQwZNEJwOaOg9KPgu3iTtqXHyMrnTZ9P5ydf0jzfkdFzaTAPOmZ20vKEGBua+356fldEtg88PkfG+cUqy8fhI+RdkBRD5YWSWU4xfBbS2hBW4Be3iUwfncXeQLU29/8l0BX6iZQAVJGn04v6OTJ/DFq800Bw82rHJ5vn30xiqfAkFxK1ohBC8g/ThY4IgeSIW5AFjATcqD9m8Ac2n/ephIYaSFu2/kq3Gu9m84NYGfu4zxppdARDPUg1fhPv4K0ygEuS5ST3ukXlwOkVXwmxTcS4LmYbgSZCCr0VfS/+xVFlAgMBAAGjggHTMIIBzzCBswYIKwYBBQUHAQEEgaYwgaMwMgYIKwYBBQUHMAKGJmh0dHBzOi8vcm9vdGNhLmdvdi52bi9jcnQvdm5yY2EyNTYucDdiMEAGCCsGAQUFBzAChjRodHRwOi8vd3d3LnNhZmVjZXJ0LmNvbS52bi93d3cvY2VydC9TQUZFLUNBLTIwMjAuY2VyMCsGCCsGAQUFBzABhh9odHRwOi8vb2NzcDIwMjAuc2FmZWNlcnQuY29tLnZuMB0GA1UdDgQWBBRP/N5qgZ58mGkkJjx8YSJWNH74MjAMBgNVHRMBAf8EAjAAMB8GA1UdIwQYMBaAFFkA4fVoAKegCQ7q9nQ8m1PihNPYMEkGA1UdIARCMEAwPgYKKwYBBAGB7QMBCDAwMC4GCCsGAQUFBwIBFiJodHRwOi8vd3d3LnNhZmVjZXJ0LmNvbS52bi93d3cvcnBhMC8GA1UdHwQoMCYwJKAioCCGHmh0dHA6Ly9jcmwyMDIwLnNhZmVjZXJ0LmNvbS52bjAOBgNVHQ8BAf8EBAMCBPAwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMEMB4GA1UdEQQXMBWBE2t0cG0udHMyNEBnbWFpbC5jb20wDQYJKoZIhvcNAQELBQADggEBACsZoIAFR6Un+Gula1Qts6vTDjYxtaL0W3QJSL42LA9T9FNDsDOJmk6WAwXVaSb5/StP3ZYfGD9pIvpmmwRH7kkjQX9JewP6EmBZn6Jlbvgyw7fkeXIR9D/+aa40GCBCQDr4K+6FBQsUkZe3OFp80X3va2FqIhuLjvNNvlMf9Sn9q/qHe7epemZH8+xDAewELaCjnl8UUceIeiddoy8Bv5kFVrpl60esU8rKTPjUQEy32bhOf52oC7+SxYhJ1dHSZ/sikrLVy/osFaYMQmhxNkcc2o1sxHIE0vvk6kJO87TIvoboZdmEGvcDZrNMP4Vpxzu6bYH4V5VPbotMFHStYf4=</X509Certificate></X509Data></KeyInfo></Signature><Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/><SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/><Reference URI="#TS24-f2628787-5455-4db8-abd0-8f993722652b"><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><DigestValue>foV0arjfN5XU2GCoa7UHCkrI6gHoM8OS98vQfQAJisM=</DigestValue></Reference></SignedInfo><SignatureValue>mwrApauBy7gfmD2OXogCaOo0oWFPwrAO+iqLyn8o7GeGxw02ePdAVpWMsywmFuby6XznTuLCxTjg&#13;
+QH+Mo3S9wiO+IJRDrhuEejDmmzUX/ZbQgTFRsNCNB2dFCiRiIuaPwX4A0hXDyFm32vxT8WYAk7c4&#13;
+wjkhi3kouHP76TiA6Gw=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>nltiCFvV6ujhbdmiVDaZ7Q7ZIZJUuW4nv03fOzM3sQjCb/5dH/iniw50oVVFz1u+sh9BHCq+nwPz&#13;
+aG0Mwuv/P4WUbtuiKG1GExsCqmNjeilNcVZQlo6MJof3LPEX/Y2vllgrfgMTSwOid1pMZTXNi9o6&#13;
+aySVUAPcphS7/TfxrZ0=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509SubjectName>C=VN,L=285/94B Cách Mạng Tháng 8\, Phường 12\, Quận 10\, Thành Phố Hồ Chí Minh\, Việt Nam,O=MST:0309478306,CN=CÔNG TY CỔ PHẦN TS24,1.2.840.113549.1.9.1=#1611696e666f4074733234636f72702e636f6d</X509SubjectName><X509Certificate>MIIE5jCCA86gAwIBAgIQVAfput6dBtueZ3X3y6mIWTANBgkqhkiG9w0BAQsFADBXMQswCQYDVQQG&#13;
+EwJWTjEkMCIGA1UEChMbU0FGRS1DQSBKb2ludCBTdG9jayBDb21wYW55MRAwDgYDVQQLEwdTQUZF&#13;
+LUNBMRAwDgYDVQQDEwdTQUZFLUNBMB4XDTE3MDkyNTAzMDIyMFoXDTIyMDkyMjAxMzUxNlowgdYx&#13;
+IDAeBgkqhkiG9w0BCQEWEWluZm9AdHMyNGNvcnAuY29tMSIwIAYDVQQDDBlDw5RORyBUWSBD4buU&#13;
+IFBI4bqmTiBUUzI0MRcwFQYDVQQKDA5NU1Q6MDMwOTQ3ODMwNjFoMGYGA1UEBwxfMjg1Lzk0QiBD&#13;
+w6FjaCBN4bqhbmcgVGjDoW5nIDgsIFBoxrDhu51uZyAxMiwgUXXhuq1uIDEwLCBUaMOgbmggUGjh&#13;
+u5EgSOG7kyBDaMOtIE1pbmgsIFZp4buHdCBOYW0xCzAJBgNVBAYTAlZOMIGfMA0GCSqGSIb3DQEB&#13;
+AQUAA4GNADCBiQKBgQCeW2IIW9Xq6OFt2aJUNpntDtkhklS5bie/Td87MzexCMJv/l0f+KeLDnSh&#13;
+VUXPW76yH0EcKr6fA/NobQzC6/8/hZRu26IobUYTGwKqY2N6KU1xVlCWjowmh/cs8Rf9ja+WWCt+&#13;
+AxNLA6J3WkxlNc2L2jprJJVQA9ymFLv9N/GtnQIDAQABo4IBsDCCAawwgbUGCCsGAQUFBwEBBIGo&#13;
+MIGlMDcGCCsGAQUFBzAChitodHRwOi8vcHVibGljLnJvb3RjYS5nb3Yudm4vY3J0L21pY25yY2Eu&#13;
+Y3J0MEAGCCsGAQUFBzAChjRodHRwOi8vd3d3LnNhZmVjZXJ0LmNvbS52bi93d3cvY2VydC9TQUZF&#13;
+LUNBLTIwMTcuY2VyMCgGCCsGAQUFBzABhhxodHRwOi8vb2NzcDEuc2FmZWNlcnQuY29tLnZuMB0G&#13;
+A1UdDgQWBBScyrX0ILY/qiOz72CE8klcPJFQkjAMBgNVHRMBAf8EAjAAMB8GA1UdIwQYMBaAFPQN&#13;
+FHjASEzZOtqbGk1fjncLNovkMEcGA1UdIARAMD4wPAYIYIVAAwECAwQwMDAuBggrBgEFBQcCARYi&#13;
+aHR0cDovL3d3dy5zYWZlY2VydC5jb20udm4vd3d3L3JwYTAsBgNVHR8EJTAjMCGgH6AdhhtodHRw&#13;
+Oi8vY3JsMS5zYWZlY2VydC5jb20udm4wDgYDVR0PAQH/BAQDAgTwMB0GA1UdJQQWMBQGCCsGAQUF&#13;
+BwMCBggrBgEFBQcDBDANBgkqhkiG9w0BAQsFAAOCAQEAkt2KM5xWo/CDnplV/RsNPWMOgVSdhfoB&#13;
+QfMWDAiylg831YMtz0pXr4SthRp94ij03R4DS0TOxrJ8YFtOvZJH/Qj/0Xaoh+1pOr+AJ7u9l6lM&#13;
+RSVQBQzshsVS/V6lXLCIVJZ3YjS3oi2W0GmSNUCC+I7QfcMBi0zeQVRIvPYmK/AFOtjnNplmuzqB&#13;
+5siT9DwjsIChh2ys7d5u/WGCoG4RjT/UqmdupTCm8aTt2XLv4I5GzynkWqzg8muXW/tGXHYPttyj&#13;
+XVwikM6W33Lpp2GNPv9AfUnFJuLT/6JLusWad0Ki8qGEfKZctqas1eQ7EX44lGIs0JuEhu9dlxun&#13;
+40MfSw==</X509Certificate></X509Data></KeyInfo></Signature></CKyDTu></HSoThueDTu>

@@ -5,6 +5,7 @@
   "dependencies": {
     "base-64": "^0.1.0",
     "body-parser": "^1.19.0",
+    "dotenv": "^16.0.1",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
     "jquery": "^3.6.0",
@@ -15,7 +16,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node index.js",
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
