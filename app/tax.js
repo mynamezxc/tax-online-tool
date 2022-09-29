@@ -77,7 +77,16 @@ async function is_expired(browser, session) {
     if (pages.length == 2) {
         page = pages[1];
     }
+    
     var newPage = await browser.newPage();
+    newPage.on('error', err=> {
+        console.log('error happen at the page');
+    });
+    
+    newPage.on('pageerror', pageerr => {
+        console.log('page error occurred');
+    });
+
     const downloadPath = path.resolve(__dirname.replace("\\", "/") + '/../public/files');
     await newPage._client.send('Page.setDownloadBehavior', {
         behavior: 'allow',
@@ -157,13 +166,17 @@ async function fillCaptchaAndLogin(browser_id, captcha, username, password) {
     //     $("#loginForm").submit();
     // `;
     // await page.addScriptTag({"content": script});
-    await page.evaluate((username, password, captcha) => {
-        document.querySelector('#_userName').value = username;
-        document.querySelector('#password').value = password;
-        document.querySelector('#vcode').value = captcha;
-        document.querySelector('#dangnhap').click();
-        // $("#loginForm").submit();
-    }, username, password, captcha);
+    try {
+        await page.evaluate((username, password, captcha) => {
+            document.querySelector('#_userName').value = username;
+            document.querySelector('#password').value = password;
+            document.querySelector('#vcode').value = captcha;
+            document.querySelector('#dangnhap').click();
+            // $("#loginForm").submit();
+        }, username, password, captcha);
+    } catch (err) {
+        console.log("Error occurred");
+    }
     
     await page.waitForNavigation();
     // await delay(3000);
@@ -229,6 +242,7 @@ async function eSigner(browser_id, filename) {
             }
         }
     } catch(err) {
+        console.log("Error occurred 2");
         return false;
     }
     
@@ -286,12 +300,17 @@ async function eSigner(browser_id, filename) {
         if(format != 9) {
             return false;
         }
-        await newPage.evaluate((format, real_path, real_name) => {
-            document.querySelector('#fullPathFileName').value = real_path;
-            document.querySelector('#tkhaiFormat').value = format;
-            document.querySelector('#fileName').value = real_name;
-            document.querySelector('#uploadButton').click();
-        }, format, real_path, real_name);
+        try {
+            await newPage.evaluate((format, real_path, real_name) => {
+                document.querySelector('#fullPathFileName').value = real_path;
+                document.querySelector('#tkhaiFormat').value = format;
+                document.querySelector('#fileName').value = real_name;
+                document.querySelector('#uploadButton').click();
+            }, format, real_path, real_name);
+        } catch (err) {
+            console.log("Error occurred 3");
+        }
+        
         await delay(5000);
         content = await newPage.content();
         try {
@@ -637,7 +656,9 @@ var search_document = async (req, res) => {
                     // Get file to khai
                     await newPage.evaluate(async (file_id) => {
                         if (Number.isInteger(parseInt(file_id))) {
-                            await downloadTkhai(file_id);
+                            if (typeof downloadTkhai === "function") {
+                                await downloadTkhai(file_id);
+                            }
                         }
                     }, datas[i]["id"]);
                     await delay(500);
@@ -814,53 +835,58 @@ var user_info = async (req, res) => {
                 return {"id": browser_id, "status": false, "message": "Connection error"};
             }
         } else {
-            datas = await newPage.evaluate(async () => {
-                var response_searchs = {"detail": [], "banks": []};
-                $("table.result_table tr").each(async function(key, el) {
-                    var td_list = $(el).find("td");
-                    if(td_list.length == 2) {
-                        switch(key) {
-                            case 0:
-                                key_name = "username";
-                                break;
-                            case 1:
-                                key_name = "fullname";
-                                break;
-                            case 2:
-                                key_name = "phone";
-                                break;
-                            case 3:
-                                key_name = "email";
-                                break;
-                            case 4:
-                                key_name = "cccd";
-                                break;
-                            case 5:
-                                key_name = "department";
-                                break;
-                            default:
-                                key_name = $(td_list[0]).text().trim();
+            try {
+                
+                datas = await newPage.evaluate(async () => {
+                    var response_searchs = {"detail": [], "banks": []};
+                    $("table.result_table tr").each(async function(key, el) {
+                        var td_list = $(el).find("td");
+                        if(td_list.length == 2) {
+                            switch(key) {
+                                case 0:
+                                    key_name = "username";
+                                    break;
+                                case 1:
+                                    key_name = "fullname";
+                                    break;
+                                case 2:
+                                    key_name = "phone";
+                                    break;
+                                case 3:
+                                    key_name = "email";
+                                    break;
+                                case 4:
+                                    key_name = "cccd";
+                                    break;
+                                case 5:
+                                    key_name = "department";
+                                    break;
+                                default:
+                                    key_name = $(td_list[0]).text().trim();
 
+                            }
+                            // console.log(key_name);
+                            // console.log("-------------");
+                            response_searchs["detail"].push({
+                                key_name: key_name,
+                                key_value: $(td_list[1]).text().trim(),
+                            })
+                        } else if(td_list.length == 4) {
+                            if ($(td_list[0]).text().trim() != "STT") {
+                                response_searchs["banks"].push({
+                                    "bank_name": $(td_list[1]).text().trim(),
+                                    "bank_account": $(td_list[2]).text().trim(),
+                                    "currency": $(td_list[3]).text().trim()
+                                });
+                            }
+                            
                         }
-                        // console.log(key_name);
-                        // console.log("-------------");
-                        response_searchs["detail"].push({
-                            key_name: key_name,
-                            key_value: $(td_list[1]).text().trim(),
-                        })
-                    } else if(td_list.length == 4) {
-                        if ($(td_list[0]).text().trim() != "STT") {
-                            response_searchs["banks"].push({
-                                "bank_name": $(td_list[1]).text().trim(),
-                                "bank_account": $(td_list[2]).text().trim(),
-                                "currency": $(td_list[3]).text().trim()
-                            });
-                        }
-                        
-                    }
+                    });
+                    return response_searchs;
                 });
-                return response_searchs;
-            });
+            } catch (err) {
+                console.log("Error occurred 4");
+            }
             if (browser_id in browsers) {
                 // await newPage.close();
                 try {
@@ -1071,7 +1097,9 @@ var search_document_result =  async (req, res) => {
                 for (let file of datas) {
                     await newPage.evaluate(async (file_id) => {
                         if (Number.isInteger(parseInt(file_id))) {
-                            await downloadFile(file_id);
+                            if (typeof downloadFile === "function") {
+                                await downloadFile(file_id);
+                            }
                         }
                     }, file["file_id"]);
                     await delay(300);
@@ -1288,20 +1316,24 @@ var upload_attachment = async (req, res) => {
             response["message"] = "This file is not support, XML PDF WORD EXCEL required";
             return response;
         }
-        await newPage.evaluate((attachment_code, format, real_name, real_path) => {
-            document.querySelector('#maPl').value = attachment_code;
-            document.querySelector('#fullPathFileName').value = real_path;
-            document.querySelector('#tkhaiFormat').value = format;
-            document.querySelector('#fileName').value = real_name;
-            document.querySelector('#uploadButton').click();
-        }, attachment_code, format, real_name, real_path);
-        await delay(4000);
-        var message = await newPage.evaluate(() => {
-            if(document.querySelector(".app_error")) {
-                return document.querySelector(".app_error").textContent.replace("\n", "").replace("\\n", "").trim();
-            }
-            return false;
-        });
+        try {
+            await newPage.evaluate((attachment_code, format, real_name, real_path) => {
+                document.querySelector('#maPl').value = attachment_code;
+                document.querySelector('#fullPathFileName').value = real_path;
+                document.querySelector('#tkhaiFormat').value = format;
+                document.querySelector('#fileName').value = real_name;
+                document.querySelector('#uploadButton').click();
+            }, attachment_code, format, real_name, real_path);
+            await delay(4000);
+            var message = await newPage.evaluate(() => {
+                if(document.querySelector(".app_error")) {
+                    return document.querySelector(".app_error").textContent.replace("\n", "").replace("\\n", "").trim();
+                }
+                return false;
+            });
+        } catch (err) {
+            console.log ("error occurred 5");
+        }
         fs.unlink("./upload/"+real_name, (err) => {
             if (err) {
                 console.log("failed to delete local file:"+err);
