@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?><HSoThueDTu xmlns="http://kekhaithue.gdt.gov.vn/TKhaiThue" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<HSoKhaiThue id="TS24-b95ac7de-abd8-4f23-bee6-561e5eaebc13">
+		<TTinChung>
+			<TTinDVu>
+				<maDVu>00004</maDVu>
+				<tenDVu>TaxOnline</tenDVu>
+				<pbanDVu>1</pbanDVu>
+				<ttinNhaCCapDVu/>
+			</TTinDVu>
+			<TTinTKhaiThue>
+				<TKhaiThue>
+					<maTKhai>836</maTKhai>
+					<tenTKhai>Tờ khai tiền thuê đất, thuê mặt nước (01/TMDN) (TT80/2021)</tenTKhai>
+					<moTaBMau>(Ban hành kèm theo Thông tư số 80/2021/TT-BTC ngày 29 tháng 9 năm 2021 của Bộ trưởng Bộ Tài chính)</moTaBMau>
+					<pbanTKhaiXML>2.5.1</pbanTKhaiXML>
+					<loaiTKhai>B</loaiTKhai>
+					<soLan>1</soLan>
+					<KyKKhaiThue>
+						<kieuKy>Y</kieuKy>
+						<kyKKhai>2021</kyKKhai>
+						<kyKKhaiTuNgay>01/01/2021</kyKKhaiTuNgay>
+						<kyKKhaiDenNgay>31/12/2021</kyKKhaiDenNgay>
+						<kyKKhaiTuThang/>
+						<kyKKhaiDenThang/>
+					</KyKKhaiThue>
+					<maCQTNoiNop>10713</maCQTNoiNop>
+					<tenCQTNoiNop>Huyện Gia Lộc - Chi cục Thuế khu vực Tứ Lộc</tenCQTNoiNop>
+					<ngayLapTKhai>2022-09-14</ngayLapTKhai>
+					<GiaHan>
+						<maLyDoGiaHan/>
+						<lyDoGiaHan/>
+					</GiaHan>
+					<nguoiKy>aaaaa</nguoiKy>
+					<ngayKy>2022-09-13</ngayKy>
+					<nganhNgheKD/>
+				</TKhaiThue>
+				<NNT>
+					<mst>0309478306-999</mst>
+					<tenNNT>CONG TY CO PHAN TS24 (NO_EDIT)</tenNNT>
+					<dchiNNT>285/94B</dchiNNT>
+					<phuongXa>Phường 05</phuongXa>
+					<maHuyenNNT>70111</maHuyenNNT>
+					<tenHuyenNNT>Quận 6</tenHuyenNNT>
+					<maTinhNNT>70100</maTinhNNT>
+					<tenTinhNNT>Tp. Hồ Chí Minh</tenTinhNNT>
+					<dthoaiNNT>1234567890</dthoaiNNT>
+					<faxNNT/>
+					<emailNNT>aaaaa@gmail.com</emailNNT>
+				</NNT>
+			</TTinTKhaiThue>
+		</TTinChung>
+		<CTieuTKhaiChinh>
+			<soLan>1</soLan>
+			<NguoiNopThue>
+				<ct05>1985-12-21</ct05>
+				<ct07>12312</ct07>
+				<ct08>2018-12-23</ct08>
+				<ct09>12313</ct09>
+				<DiaChi>
+					<ct10_1/>
+					<ct10_2/>
+					<ct10_3/>
+					<ct10_4_ma>8231203</ct10_4_ma>
+					<ct10_4_ten>Xã Tam Giang Đông</ct10_4_ten>
+				</DiaChi>
+				<ct11>Xã Tam Giang Đông, Năm Căn, Cà Mau</ct11>
+			</NguoiNopThue>
+			<DacDiem>
+				<ct16_1/>
+				<ct16_2/>
+				<ct16_3/>
+				<ct16_4_ma>8211101</ct16_4_ma>
+				<ct16_4_ten>Xã An Phúc</ct16_4_ten>
+				<ct16_5_ma>82111</ct16_5_ma>
+				<ct16_5_ten>Đông Hải</ct16_5_ten>
+				<ct16_6_ma>821</ct16_6_ma>
+				<ct16_6_ten>Bạc Liêu</ct16_6_ten>
+				<ct17>142</ct17>
+				<ct18>xây nhà</ct18>
+				<ct19>222222222.2</ct19>
+				<ct20>2022-01-01</ct20>
+			</DacDiem>
+			<DienTich>
+				<ct21>22222222.22</ct21>
+				<ct22>33333333.33</ct22>
+				<ct23>44444444.44</ct23>
+				<ct24>55555555.55</ct24>
+				<ct25>66666666.66</ct25>
+			</DienTich>
+			<thoiGian_suDung>6</thoiGian_suDung>
+		</CTieuTKhaiChinh>
+		<PLuc>
+			<PL01_KHBS>
+				<Header>
+					<maTKhai>836</maTKhai>
+					<tenTKhai>Tờ khai tiền thuê đất, thuê mặt nước (01/TMDN) (TT80/2021)</tenTKhai>
+					<maGiaoDich>11111</maGiaoDich>
+					<KyKKhaiThue>
+						<kieuKy>Y</kieuKy>
+						<kyKKhai>2021</kyKKhai>
+						<kyKKhaiTuNgay>01/01/2021</kyKKhaiTuNgay>
+						<kyKKhaiDenNgay>31/12/2021</kyKKhaiDenNgay>
+						<kyKKhaiTuThang/>
+						<kyKKhaiDenThang/>
+					</KyKKhaiThue>
+					<soLan>1</soLan>
+					<mst>0309478306-999</mst>
+					<tenNNT>CONG TY CO PHAN TS24 (NO_EDIT)</tenNNT>
+					<mstDLyThue xsi:nil="true"/>
+					<tenDLyThue/>
+					<soHDongDLyThue/>
+					<ngayKyHDDLyThue xsi:nil="true"/>
+				</Header>
+				<ma_DonViTien>VND</ma_DonViTien>
+				<ten_DonViTien>Đồng Việt Nam</ten_DonViTien>
+				<Muc_A>
+					<Muc_I>
+						<Muc_1>
+							<ChiTiet id="ID_1">
+								<ct2_ma/>
+								<ct2_ten/>
+								<ct3>0</ct3>
+							</ChiTiet>
+							<tongCong_ct10>0</tongCong_ct10>
+						</Muc_1>
+						<Muc_2>
+							<DSachPLuc>
+								<BKePLuc id="ID_1">
+									<ma_PLuc/>
+									<ten_PLuc/>
+									<CTietPLuc>
+										<ChiTiet id="ID_1">
+											<ct2_ma/>
+											<ct2_ten/>
+											<ct3_ma/>
+											<ct3_ten/>
+											<ct04_ma/>
+											<ct04_ten/>
+											<ct05_ma/>
+											<ct05_ten/>
+											<ct06_ma/>
+											<ct06_ten/>
+											<ct7>0</ct7>
+										</ChiTiet>
+									</CTietPLuc>
+								</BKePLuc>
+								<tongCong_ct11>0</tongCong_ct11>
+							</DSachPLuc>
+						</Muc_2>
+						<Muc_3>
+							<ct3a_1>2022-09-13</ct3a_1>
+							<ct3a_2>166</ct3a_2>
+							<ct3b>0</ct3b>
+						</Muc_3>
+					</Muc_I>
+					<Muc_II>
+						<ChiTiet id="ID_1">
+							<ct2_ma/>
+							<ct2_ten/>
+							<ct3>0</ct3>
+						</ChiTiet>
+						<tongCong_ct12>0</tongCong_ct12>
+					</Muc_II>
+					<Muc_III>
+						<ChiTiet id="ID_1">
+							<ct2_ma/>
+							<ct2_ten/>
+							<ct3>0</ct3>
+						</ChiTiet>
+						<tongCong_ct13>0</tongCong_ct13>
+					</Muc_III>
+				</Muc_A>
+				<Muc_B>
+					<Muc_I>
+						<ct_1>0</ct_1>
+						<ct_2_so/>
+						<ct_2_ngay xsi:nil="true"/>
+						<ct_2_CQT_ma/>
+						<ct_2_CQT_ten/>
+						<ct_3_so/>
+						<ct_3_ngay xsi:nil="true"/>
+					</Muc_I>
+					<Muc_II>
+						<ct_1>0</ct_1>
+						<ct_2>0</ct_2>
+					</Muc_II>
+				</Muc_B>
+			</PL01_KHBS>
+			<PL01_1_KHBS>
+				<Header>
+					<maTKhai>836</maTKhai>
+					<tenTKhai>Tờ khai tiền thuê đất, thuê mặt nước (01/TMDN) (TT80/2021)</tenTKhai>
+					<maGiaoDich>11111</maGiaoDich>
+					<KyKKhaiThue>
+						<kieuKy>Y</kieuKy>
+						<kyKKhai>2021</kyKKhai>
+						<kyKKhaiTuNgay>01/01/2021</kyKKhaiTuNgay>
+						<kyKKhaiDenNgay>31/12/2021</kyKKhaiDenNgay>
+						<kyKKhaiTuThang/>
+						<kyKKhaiDenThang/>
+					</KyKKhaiThue>
+					<soLan>1</soLan>
+					<mst>0309478306-999</mst>
+					<tenNNT>CONG TY CO PHAN TS24 (NO_EDIT)</tenNNT>
+					<mstDLyThue xsi:nil="true"/>
+					<tenDLyThue/>
+					<soHDongDLyThue/>
+					<ngayKyHDDLyThue xsi:nil="true"/>
+				</Header>
+				<ma_DonViTien>VND</ma_DonViTien>
+				<ten_DonViTien>Đồng Việt Nam</ten_DonViTien>
+				<Muc_A>
+					<DSachHSo>
+						<BKeHSo id="ID_1">
+							<ma_HSo/>
+							<ten_HSo>01/TMDN</ten_HSo>
+							<CTietHSo>
+								<ChiTiet id="ID_1">
+									<ct2_ma/>
+									<ct2_ten/>
+									<ct3_ma>[19]</ct3_ma>
+									<ct3_ten>Diện tích</ct3_ten>
+									<ct3_1_ma/>
+									<ct3_1_ten/>
+									<ct3_2_ma/>
+									<ct3_2_ten/>
+									<ct04>166666666.65</ct04>
+									<ct05>222222222.2</ct05>
+									<ct06>55555555.55</ct06>
+									<ct7>0</ct7>
+									<ct8/>
+								</ChiTiet>
+								<ChiTiet id="ID_2">
+									<ct2_ma/>
+									<ct2_ten/>
+									<ct3_ma>[21]</ct3_ma>
+									<ct3_ten>Đất/mặt nước dùng cho sản xuất kinh doanh phi nông nghiệp</ct3_ten>
+									<ct3_1_ma/>
+									<ct3_1_ten/>
+									<ct3_2_ma/>
+									<ct3_2_ten/>
+									<ct04>11111111.11</ct04>
+									<ct05>22222222.22</ct05>
+									<ct06>11111111.11</ct06>
+									<ct7>0</ct7>
+									<ct8/>
+								</ChiTiet>
+								<ChiTiet id="ID_3">
+									<ct2_ma/>
+									<ct2_ten/>
+									<ct3_ma>[22]</ct3_ma>
+									<ct3_ten>Đất xây dựng nhà ở, cơ sở hạ tầng để cho thuê</ct3_ten>
+									<ct3_1_ma/>
+									<ct3_1_ten/>
+									<ct3_2_ma/>
+									<ct3_2_ten/>
+									<ct04>22222222.22</ct04>
+									<ct05>33333333.33</ct05>
+									<ct06>11111111.11</ct06>
+									<ct7>0</ct7>
+									<ct8/>
+								</ChiTiet>
+								<ChiTiet id="ID_4">
+									<ct2_ma/>
+									<ct2_ten/>
+									<ct3_ma>[23]</ct3_ma>
+									<ct3_ten>Đất xây dựng khu công nghiệp, cụm công nghiệp, làng nghề</ct3_ten>
+									<ct3_1_ma/>
+									<ct3_1_ten/>
+									<ct3_2_ma/>
+									<ct3_2_ten/>
+									<ct04>33333333.33</ct04>
+									<ct05>44444444.44</ct05>
+									<ct06>11111111.11</ct06>
+									<ct7>0</ct7>
+									<ct8/>
+								</ChiTiet>
+								<ChiTiet id="ID_5">
+									<ct2_ma/>
+									<ct2_ten/>
+									<ct3_ma>[24]</ct3_ma>
+									<ct3_ten>Đất/ mặt nước sử dụng vào mục đích sản xuất nông nghiệp, nuôi trồng thuỷ sản</ct3_ten>
+									<ct3_1_ma/>
+									<ct3_1_ten/>
+									<ct3_2_ma/>
+									<ct3_2_ten/>
+									<ct04>44444444.44</ct04>
+									<ct05>55555555.55</ct05>
+									<ct06>11111111.11</ct06>
+									<ct7>0</ct7>
+									<ct8/>
+								</ChiTiet>
+								<ChiTiet id="ID_6">
+									<ct2_ma/>
+									<ct2_ten/>
+									<ct3_ma>[25]</ct3_ma>
+									<ct3_ten>Đất/mặt nước dùng vào mục đích khác</ct3_ten>
+									<ct3_1_ma/>
+									<ct3_1_ten/>
+									<ct3_2_ma/>
+									<ct3_2_ten/>
+									<ct04>55555555.55</ct04>
+									<ct05>66666666.66</ct05>
+									<ct06>11111111.11</ct06>
+									<ct7>0</ct7>
+									<ct8/>
+								</ChiTiet>
+								<ChiTiet id="ID_7">
+									<ct2_ma/>
+									<ct2_ten/>
+									<ct3_ma>5</ct3_ma>
+									<ct3_ten>Thời gian sử dụng đất vào mục đích thuộc đối tượng phải nộp tiền thuê đất theo quy định của Luật Đất đai</ct3_ten>
+									<ct3_1_ma/>
+									<ct3_1_ten/>
+									<ct3_2_ma/>
+									<ct3_2_ten/>
+									<ct04>7</ct04>
+									<ct05>6</ct05>
+									<ct06>-1</ct06>
+									<ct7>0</ct7>
+									<ct8/>
+								</ChiTiet>
+							</CTietHSo>
+						</BKeHSo>
+						<TongCong>
+							<tongCong_7>0</tongCong_7>
+							<tongCong_8>0</tongCong_8>
+							<tongCong_9>0</tongCong_9>
+						</TongCong>
+					</DSachHSo>
+				</Muc_A>
+				<Muc_B>
+					<CTietTaiLieu id="ID_1">
+						<ma_TLieu/>
+						<ten_TLieu/>
+					</CTietTaiLieu>
+				</Muc_B>
+			</PL01_1_KHBS>
+		</PLuc>
+	</HSoKhaiThue>
+<CKyDTu><Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/><Reference URI="#TS24-b95ac7de-abd8-4f23-bee6-561e5eaebc13"><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><DigestValue>o7GBe8FfQbHUN5KKCVgb/POswsvBmdVAl6+0WbWIUTY=</DigestValue></Reference></SignedInfo><SignatureValue>JksLKKRjPzsbFuFW33n0PQr2X4dVRgdGkBNTJwTUBBRTG8fJk19d0GVgy7PYOBc5feMpZmZmYHz18NDN2rcKm7DDiUw6kX/yvn2ljmgVwjlNGE6/CiQNaoBkq6Nw2Fj79FyUK3N/fs0P/b7S+5eo3bwBlcgHMiIDz1LjFRPHtpPILkmLIC+aVEtq0hy/aqlMWPQ3y7qRBPxYgRqY1VrMBjFABxYwutoCInamGkx7pjC1MCJia0AtEXZRSTEvnVq39h9T3JDl0tuMvOouuHeATvv8pQ3erpafkkbMlYpOIThhUJDlZ12l2fmYZuEGZrsyN/yHIm36YBbC1sNAvONHtA==</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>ykWeskeWO9hz3XZFaX2LzAP0zNxjDi5pEel/55Ncraot7Y97xjQkLbqGtZIVd0JFFQL7K3jFf054f9DFeoU6nh9dcR5n/5ybRiv54KXbT31EpB97aTIY3tWkaS4f8zy5Ev4yvUZtTCp0vDusITwvt7prpUpsbP7XpZf3PlI7is62ED/GaYUDRLgbV2RGTW8MNakzHy5E7rLseocWhCx+thnSiMDSzQM5J8EkQ8+guuA66n5nLg7FbXf34UU0yATbqqVGXTQF+1bzCQkx4wOUzPmorEtibH8rjFyE32c+y9GyxxTFi7DDV2sO6zsBPx22LaF8SRR7/wuCp7w8kpmM5w==</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509SubjectName>C=VN, S=TP Hồ Chí Minh, L="Số 285/94B Cách Mạng Tháng 8, Phường 12, Quận 10, Thành Phố Hồ Chí Minh", O=PHÒNG THỬ NGHIỆM TS24 (TEST CHƯƠNG TRÌNH), CN=PHÒNG THỬ NGHIỆM TS24 (TEST CHƯƠNG TRÌNH), OID.0.9.2342.19200300.100.1.1=MST:0309478306-999, E=ktpm.ts24@gmail.com</X509SubjectName><X509Certificate>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</X509Certificate></X509Data></KeyInfo></Signature><Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/><SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/><Reference URI="#TS24-b95ac7de-abd8-4f23-bee6-561e5eaebc13"><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><DigestValue>o7GBe8FfQbHUN5KKCVgb/POswsvBmdVAl6+0WbWIUTY=</DigestValue></Reference></SignedInfo><SignatureValue>SPh7M/52Kzl2kHXHeUnOe3xbc0nvigG41pLOs4+vsyrZN8OUhJaQTwBVQEkw/82xtt3ILj2I44Wh&#13;
+VZ4em9ma4IiGQE51zmAXqLA5/ggFkWjTK8vA7I8FfqamXeNiKhpu460hnTXySB6zv58dIGWuVUBp&#13;
+we0jSx6duk32lKB3rQQ=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>nltiCFvV6ujhbdmiVDaZ7Q7ZIZJUuW4nv03fOzM3sQjCb/5dH/iniw50oVVFz1u+sh9BHCq+nwPz&#13;
+aG0Mwuv/P4WUbtuiKG1GExsCqmNjeilNcVZQlo6MJof3LPEX/Y2vllgrfgMTSwOid1pMZTXNi9o6&#13;
+aySVUAPcphS7/TfxrZ0=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509SubjectName>C=VN,L=285/94B Cách Mạng Tháng 8\, Phường 12\, Quận 10\, Thành Phố Hồ Chí Minh\, Việt Nam,O=MST:0309478306,CN=CÔNG TY CỔ PHẦN TS24,1.2.840.113549.1.9.1=#1611696e666f4074733234636f72702e636f6d</X509SubjectName><X509Certificate>MIIE5jCCA86gAwIBAgIQVAfput6dBtueZ3X3y6mIWTANBgkqhkiG9w0BAQsFADBXMQswCQYDVQQG&#13;
+EwJWTjEkMCIGA1UEChMbU0FGRS1DQSBKb2ludCBTdG9jayBDb21wYW55MRAwDgYDVQQLEwdTQUZF&#13;
+LUNBMRAwDgYDVQQDEwdTQUZFLUNBMB4XDTE3MDkyNTAzMDIyMFoXDTIyMDkyMjAxMzUxNlowgdYx&#13;
+IDAeBgkqhkiG9w0BCQEWEWluZm9AdHMyNGNvcnAuY29tMSIwIAYDVQQDDBlDw5RORyBUWSBD4buU&#13;
+IFBI4bqmTiBUUzI0MRcwFQYDVQQKDA5NU1Q6MDMwOTQ3ODMwNjFoMGYGA1UEBwxfMjg1Lzk0QiBD&#13;
+w6FjaCBN4bqhbmcgVGjDoW5nIDgsIFBoxrDhu51uZyAxMiwgUXXhuq1uIDEwLCBUaMOgbmggUGjh&#13;
+u5EgSOG7kyBDaMOtIE1pbmgsIFZp4buHdCBOYW0xCzAJBgNVBAYTAlZOMIGfMA0GCSqGSIb3DQEB&#13;
+AQUAA4GNADCBiQKBgQCeW2IIW9Xq6OFt2aJUNpntDtkhklS5bie/Td87MzexCMJv/l0f+KeLDnSh&#13;
+VUXPW76yH0EcKr6fA/NobQzC6/8/hZRu26IobUYTGwKqY2N6KU1xVlCWjowmh/cs8Rf9ja+WWCt+&#13;
+AxNLA6J3WkxlNc2L2jprJJVQA9ymFLv9N/GtnQIDAQABo4IBsDCCAawwgbUGCCsGAQUFBwEBBIGo&#13;
+MIGlMDcGCCsGAQUFBzAChitodHRwOi8vcHVibGljLnJvb3RjYS5nb3Yudm4vY3J0L21pY25yY2Eu&#13;
+Y3J0MEAGCCsGAQUFBzAChjRodHRwOi8vd3d3LnNhZmVjZXJ0LmNvbS52bi93d3cvY2VydC9TQUZF&#13;
+LUNBLTIwMTcuY2VyMCgGCCsGAQUFBzABhhxodHRwOi8vb2NzcDEuc2FmZWNlcnQuY29tLnZuMB0G&#13;
+A1UdDgQWBBScyrX0ILY/qiOz72CE8klcPJFQkjAMBgNVHRMBAf8EAjAAMB8GA1UdIwQYMBaAFPQN&#13;
+FHjASEzZOtqbGk1fjncLNovkMEcGA1UdIARAMD4wPAYIYIVAAwECAwQwMDAuBggrBgEFBQcCARYi&#13;
+aHR0cDovL3d3dy5zYWZlY2VydC5jb20udm4vd3d3L3JwYTAsBgNVHR8EJTAjMCGgH6AdhhtodHRw&#13;
+Oi8vY3JsMS5zYWZlY2VydC5jb20udm4wDgYDVR0PAQH/BAQDAgTwMB0GA1UdJQQWMBQGCCsGAQUF&#13;
+BwMCBggrBgEFBQcDBDANBgkqhkiG9w0BAQsFAAOCAQEAkt2KM5xWo/CDnplV/RsNPWMOgVSdhfoB&#13;
+QfMWDAiylg831YMtz0pXr4SthRp94ij03R4DS0TOxrJ8YFtOvZJH/Qj/0Xaoh+1pOr+AJ7u9l6lM&#13;
+RSVQBQzshsVS/V6lXLCIVJZ3YjS3oi2W0GmSNUCC+I7QfcMBi0zeQVRIvPYmK/AFOtjnNplmuzqB&#13;
+5siT9DwjsIChh2ys7d5u/WGCoG4RjT/UqmdupTCm8aTt2XLv4I5GzynkWqzg8muXW/tGXHYPttyj&#13;
+XVwikM6W33Lpp2GNPv9AfUnFJuLT/6JLusWad0Ki8qGEfKZctqas1eQ7EX44lGIs0JuEhu9dlxun&#13;
+40MfSw==</X509Certificate></X509Data></KeyInfo></Signature></CKyDTu></HSoThueDTu>
