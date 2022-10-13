@@ -36,6 +36,14 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true}))
 app.use(bodyParser.text({limit: '50mb', type: 'text/plain'}));
 app.set('view engine', 'ejs');
 
+process.on('unhandledRejection', (reason, p) => {
+    console.error(reason, 'Unhandled Rejection at Promise', p);
+}).on('uncaughtException', err => {
+    console.error(err, 'Uncaught Exception thrown');
+    process.exit(1);
+});
+
+
 const browser_options = [
     '--no-sandbox',
     '--disable-setuid-sandbox',
@@ -183,7 +191,7 @@ async function fillCaptchaAndLogin(browser_id, captcha, username, password) {
     let content = await page.content();
 
     while (content.search("Hệ thống đang thực hiện kiểm tra bản cập nhật. Vui lòng chờ trong giây lát.") != -1) {
-        await delay(1000);
+        await delay(4000);
         content = await page.content();
     }
 
