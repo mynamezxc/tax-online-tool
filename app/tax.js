@@ -190,8 +190,9 @@ async function fillCaptchaAndLogin(browser_id, captcha, username, password) {
     // await delay(3000);
     let content = await page.content();
 
-    while (content.search("Hệ thống đang thực hiện kiểm tra bản cập nhật. Vui lòng chờ trong giây lát.") != -1) {
-        await delay(4000);
+    while (content.search("Hệ thống đang thực hiện kiểm tra bản cập nhật. Vui lòng chờ trong giây lát.") != -1 ||
+        ((content.search("btn_logout.gif") == -1 && content.search("/etaxnnt/static/images/default/warn.gif") == -1 ) && (content.search("#fcdf00") == -1)) ) {
+        await delay(1000);
         content = await page.content();
     }
 
