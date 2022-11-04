@@ -191,8 +191,9 @@ async function fillCaptchaAndLogin(browser_id, captcha, username, password) {
     let content = await page.content();
 
     while (content.search("Hệ thống đang thực hiện kiểm tra bản cập nhật. Vui lòng chờ trong giây lát.") != -1 ||
-        ((content.search("btn_logout.gif") == -1 && content.search("/etaxnnt/static/images/default/warn.gif") == -1 ) && (content.search("#fcdf00") == -1)) ) {
-        await delay(1000);
+        ((content.search("btn_logout.gif") == -1 && content.search("/etaxnnt/static/images/default/warn.gif") == -1 ) &&
+        (content.search("reloadVerifyCode") == -1) ) ) {
+        await delay(5000);
         content = await page.content();
     }
 
@@ -522,6 +523,8 @@ var search_document = async (req, res) => {
     var browser_id = req.params.browser_id;
     var from_date = req.params.from_date;
     var to_date = req.params.to_date;
+    var search_page = req.query.page ? req.query.page : 1;
+    var total_page = 1;
     var transaction_id = "";
     if ("transaction_id" in req.params) {
         transaction_id = req.params.transaction_id;
@@ -622,63 +625,90 @@ var search_document = async (req, res) => {
                     validateForm();
                 }, from_date, to_date, transaction_id);
 
-                await delay(4000);
-                content = await newPage.content();
-                
-                // var search_results = [];
-                let datas = await newPage.evaluate(async () => {
-                    var response_searchs = [];
-                    $("#allResultTableBody tr").each(async function(key, el) {
-                        var td_list = $(el).find("td");
-                        if(td_list.length >= 1) {
-                            var id = $(td_list[1]).text().trim();
-                            
-                            if (Number.isInteger(parseInt(id))) {
-                                
-                                response_searchs.push({
-                                    processorId: $("input[name='dse_processorId']").val(),
-                                    id: id,
-                                    document_type: $(td_list[2]).text().trim().split("-")[0],
-                                    document_name: $(td_list[2]).text().trim(),
-                                    period: $(td_list[3]).text().trim(),
-                                    type_of_document: $(td_list[4]).text().trim(),
-                                    submitted_times: $(td_list[5]).text().trim(),
-                                    additional_times: $(td_list[6]).text().trim(),
-                                    submitted_date: $(td_list[7]).text().trim(),
-                                    submitted_organ: $(td_list[9]).text().trim(),
-                                    status: $(td_list[10]).text().trim()
-                                })
-                                // console.log(id);
-                            }
-                            
-                        }
-                    });
-                    return response_searchs;
+                await delay(3000);
+
+                var dse_processorId = await newPage.evaluate(async () => {
+                    return document.querySelector("input[name='dse_processorId']").value;
                 });
 
-                console.log("LIST OF FILE: ");
-                console.log(datas);
-                console.log("--------------------------------------------------------");
+                var content = await newPage.content();
 
-                for (var i = 0; i < datas.length; i++) {
-
-                    // Get file to khai
-                    await newPage.evaluate(async (file_id) => {
-                        if (Number.isInteger(parseInt(file_id))) {
-                            if (typeof downloadTkhai === "function") {
-                                await downloadTkhai(file_id);
-                            }
-                        }
-                    }, datas[i]["id"]);
-                    await delay(500);
-                    if (fs.existsSync(downloadPath + "/ETAX"+ datas[i]["id"] + ".xml")) {
-                        datas[i]["file"] = fs.readFileSync(downloadPath + "/ETAX"+ datas[i]["id"] + ".xml", {encoding: 'base64'});
-                        fs.unlinkSync(downloadPath + "/ETAX"+ datas[i]["id"] + ".xml");
+                matches = content.match(/gotoPage\(([0-9-_.]+), '/); // get max page in string "gotoPage(29, 'gotoPageNO_listTKhai');"
+                if (matches.length >= 2) {
+                    if (Number.isInteger(parseInt(matches[1]))) {
+                        total_page = matches[1];
                     }
-                    // Close
-                    delete datas[i]["processorId"];
-                    
                 }
+
+                if (parseInt(search_page) != 1 && parseInt(search_page) <= parseInt(total_page)) {
+                    url = "https://thuedientu.gdt.gov.vn/etaxnnt/Request?dse_sessionId="+session+"&dse_applicationId=-1&dse_operationName=traCuuToKhaiProc&dse_pageId=13&dse_processorState=viewTraCuuTkhai&dse_processorId="+dse_processorId+"&dse_errorPage=error_page.jsp&dse_nextEventName=query&&pn=" + search_page;
+                    await newPage.goto(url);
+                    await newPage.waitForNavigation();
+                    content = await newPage.content();
+                }
+
+                await delay(3000);
+                
+                // var search_results = [];
+                if (search_page <= total_page) {
+
+                    var datas = await newPage.evaluate(async () => {
+                        var response_searchs = [];
+                        $("#allResultTableBody tr").each(async function(key, el) {
+                            var td_list = $(el).find("td");
+                            if(td_list.length >= 1) {
+                                var id = $(td_list[1]).text().trim();
+                                
+                                if (Number.isInteger(parseInt(id))) {
+                                    
+                                    response_searchs.push({
+                                        processorId: $("input[name='dse_processorId']").val(),
+                                        id: id,
+                                        document_type: $(td_list[2]).text().trim().split("-")[0],
+                                        document_name: $(td_list[2]).text().trim(),
+                                        period: $(td_list[3]).text().trim(),
+                                        type_of_document: $(td_list[4]).text().trim(),
+                                        submitted_times: $(td_list[5]).text().trim(),
+                                        additional_times: $(td_list[6]).text().trim(),
+                                        submitted_date: $(td_list[7]).text().trim(),
+                                        submitted_organ: $(td_list[9]).text().trim(),
+                                        status: $(td_list[10]).text().trim()
+                                    })
+                                    // console.log(id);
+                                }
+                                
+                            }
+                        });
+                        return response_searchs;
+                    });
+    
+                    console.log("LIST OF FILE: ");
+                    console.log(datas);
+                    console.log("--------------------------------------------------------");
+    
+                    for (var i = 0; i < datas.length; i++) {
+    
+                        // Get file to khai
+                        await newPage.evaluate(async (file_id) => {
+                            if (Number.isInteger(parseInt(file_id))) {
+                                if (typeof downloadTkhai === "function") {
+                                    await downloadTkhai(file_id);
+                                }
+                            }
+                        }, datas[i]["id"]);
+                        await delay(500);
+                        if (fs.existsSync(downloadPath + "/ETAX"+ datas[i]["id"] + ".xml")) {
+                            datas[i]["file"] = fs.readFileSync(downloadPath + "/ETAX"+ datas[i]["id"] + ".xml", {encoding: 'base64'});
+                            fs.unlinkSync(downloadPath + "/ETAX"+ datas[i]["id"] + ".xml");
+                        }
+                        // Close
+                        delete datas[i]["processorId"];
+                        
+                    }
+                } else {
+                    datas = [];
+                }
+                
                 // return {"id": browser_id, "status": false, "message": "Has an error occurred", "results": []};
                 if (browser_id in browsers) {
                     try {
@@ -688,7 +718,7 @@ var search_document = async (req, res) => {
                     }
                 }
                 // await newPage.close();
-                return {"id": browser_id, "status": true, "message": "Search success", "results": datas};
+                return {"id": browser_id, "status": true, "message": "Search success", "current_page": parseInt(search_page), "total_page": parseInt(total_page), "results": datas};
 
             } catch (err) {
 
