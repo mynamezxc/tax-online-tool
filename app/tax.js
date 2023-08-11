@@ -7,7 +7,6 @@
     Copyright TS24 2020
     Website: https://web.ts24.com.vn/
 */
-
 // Chromium path
 // D:\node_modules\puppeteer\.local-chromium\win64-800071\chrome-win
 // Form upload iframe
@@ -17,7 +16,8 @@
 // Form upload attach
 // https://thuedientu.gdt.gov.vn/etaxnnt/Request?dse_sessionId="+session+"&dse_applicationId=-1&dse_operationName=traCuuToKhaiProc&dse_pageId=18&dse_processorState=viewTraCuuTkhai&dse_nextEventName=gui_phu_luc&tkhaiID="+transaction_id
 const eSginer_path = __dirname + "/../eSigner";
-const key = "e8e3fa20d2588dfb1d1281caaf94332c";
+require('dotenv').config({ path: __dirname + '/.env' });
+const key = process.env.KEY;
 const puppeteer = require('puppeteer');
 
 const express = require('express');
@@ -60,6 +60,15 @@ var browsers = [];
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+const waitForLoad = (page, time) => new Promise((resolve) => {
+    page.on('rquest', (req) => {
+        waitForLoad(page, time)
+    })
+    page.on('requestfinished', (req) => {
+        setTimeout(() => resolve("timeOut"), time)
+    })
+});
 
 function makeid(length) {
     var result           = '';
@@ -124,7 +133,7 @@ async function is_expired(browser, session) {
 async function createBrowser(id) {
     const browser = await puppeteer.launch(
         {
-            args: browser_options, headless: false, Devtools: false
+            args: browser_options, headless: true, Devtools: false
         }
     );
     try {
@@ -991,6 +1000,198 @@ var user_info = async (req, res) => {
 
 };
 
+// Lấy thông tin nghĩa vụ nộp thuế
+var get_account_tax_information = async (req, res) => {
+    if(req.query.key != key) {
+        return {"status": false, "message": "Key error"};
+    }
+    var datas = [];
+    var browser_id = req.params.browser_id;
+    if (browsers[browser_id]) {
+        var browser = browsers[browser_id];
+        let pages = await browser.pages();
+        let page = pages[0];
+        if (pages.length == 2) {
+            page = pages[1];
+        }
+        var session = await getSession(page);
+        var session_expired = await is_expired(browsers[browser_id], session);
+        if (session_expired) {
+    
+            // Get captcha and return
+    
+            var browser_timeout = 600000 * 6; // 600 seconds
+            var browser_id = req.params.browser_id;
+            if (req.query.key != key) {
+                return { "status": false, "message": "Key error" };
+            }
+            if (browsers[browser_id]) {
+                try {
+                    await closeBrowser(browsers[browser_id]);
+                    delete browsers[browser_id];
+                    console.log("Reopen browser " + browser_id);
+                } catch (error) {
+                    console.log("Browser close with error");
+                }
+            }
+            browsers[browser_id] = "1";
+            var browser = await createBrowser(browser_id);
+            // Auto close browser after $browser_timeout/1000 seconds
+            setTimeout(() => {
+                if (browser_id in browser) {
+                    closeBrowser(browsers[browser_id]);
+                }
+            }, browser_timeout);
+            console.log("Browser generated with id " + browser_id);
+            if (browser) {
+                browsers[browser_id] = browser;
+                var dt = new Date();
+                dt.setMinutes(dt.getMinutes() + (browser_timeout / 1000 / 60));
+                var close_time = [
+                    dt.getDate(),
+                    dt.getMonth() + 1,
+                    dt.getFullYear()].join('/') + ' ' +
+                    [dt.getHours(),
+                    dt.getMinutes(),
+                    dt.getSeconds()].join(':');
+                
+                try {
+                    var image = "captcha/" + browser_id + ".png";
+                    if (!fs.existsSync(__dirname.replace("\\\\", "/") + "/../public/" + image)) {
+                        image = "";
+                    }
+                } catch (err) {
+                    image = "";
+                }
+                captcha_obj = { "id": browser_id, "status": true, "message": "Waiting for captcha", "image": image, "browser_close_time": close_time };
+                return {
+                    "id": browser_id,
+                    "status": false,
+                    "message": "Session Expired",
+                    "results": [],
+                    "captcha": captcha_obj
+                };
+            } else {
+                delete browsers[browser_id];
+                return { "id": browser_id, "status": false, "message": "Connection error" };
+            }
+    
+        }
+        else
+        {
+            try {
+                let pages = await browsers[browser_id].pages();
+                let page = pages[0];
+                if (pages.length == 2) {
+                    page = pages[1];
+                }
+
+                var url = "https://thuedientu.gdt.gov.vn/etaxnnt/Request?&dse_sessionId=" + session + "&dse_applicationId=-1&dse_pageId=15&dse_operationName=corpQueryNVTProc&dse_processorState=initial&dse_nextEventName=start#!";
+                var newPage = await browsers[browser_id].newPage();
+                
+                await newPage.setViewport({ width: 1366, height: 768});
+                await newPage.goto(url);
+        
+                await newPage.evaluate(() => {
+                    // $("#mst").val("0314609138").change();
+                    setTimeout(function () { queryNVT(); }, 500);
+                });
+                await waitForLoad(newPage, 800);
+        
+                content = await newPage.content();
+        
+                var datas = await newPage.evaluate(async () => {
+                    var response_searchs = [];
+                    section = false;
+                    title = "";
+                    if ($("#allResultTableBody").length >= 1) {
+                        $("#allResultTableBody tr").each(async function (key, el) {
+                            var td_list = $(el).find("td");
+                            if (td_list.length == 1)
+                            {
+                                if (["A", "B", "C"].includes($(td_list).text().substring(0, 2).trim()))
+                                {
+                                    section = $(td_list).text().substring(0, 2).trim();
+                                    if ($(td_list).text().substring(0, 2).trim() == "A") {
+                                        title = "CÁC KHOẢN CÒN PHẢI NỘP";
+                                    } else if ($(td_list).text().substring(0, 2).trim() == "B") {
+                                        title = "CÁC KHOẢN THUẾ ĐÃ NỘP";
+                                    } else if ($(td_list).text().substring(0, 2).trim() == "C") {
+                                        title = "CÁC KHOẢN THUẾ CÒN ĐƯỢC HOÀN";
+                                    }
+                                    sub_title = "";
+                                }
+                                else if (section && section.length == 1)
+                                {
+                                    // Sub sections
+                                    section = section + "-" + $(td_list).text().substring(0, $(td_list).text().indexOf(".")).trim();
+                                    sub_section = $(td_list).text().substring(0, $(td_list).text().indexOf(".")).trim();
+                                    sub_title = $(td_list).text();
+                                }
+                                // Các cột title
+    
+                            } else if (td_list.length >= 1) {
+
+                                // Các cột có value
+                                // console.log($(td_list[2]).text().trim());
+                                response_searchs.push({
+                                    "section": section,
+                                    "title": title,
+                                    "sub_section": sub_section,
+                                    "sub_title": sub_title,
+                                    "data": {
+                                        // "stt": $(td_list[0]).text().trim(),
+                                        "thu_tu_thanh_toan": $(td_list[1]).text().trim(),
+                                        "co_quan": $(td_list[2]).text().trim(),
+                                        "loai_nghia_vu": $(td_list[3]).text().trim(),
+                                        "tham_chieu": $(td_list[4]).text().trim(),
+                                        "id_khoan_phai_nop": $(td_list[5]).text().trim(),
+                                        "so_quyet_dinh": $(td_list[6]).text().trim(),
+                                        "ky_thue": $(td_list[7]).text().trim(),
+                                        "ngay_quyet_dinh": $(td_list[8]).text().trim(),
+                                        "tieumuc": $(td_list[9]).text().trim(),
+                                        "so_tien": $(td_list[10]).text().trim(),
+                                        "loai_tien": $(td_list[11]).text().trim(),
+                                        "ma_chuong": $(td_list[12]).text().trim(),
+                                        "DBHC": $(td_list[13]).text().trim(),
+                                        "han_nop": $(td_list[14]).text().trim(),
+                                        "so_tien_da_nop_tai_NHTM": $(td_list[15]).text().trim(),
+                                        "trang_thai": $(td_list[16]).text().trim(),
+                                        "tinh_chat_khoan_nop": $(td_list[17]).text().trim(),
+                                    }
+                                });
+                                // console.log(response_searchs);
+                            }
+                        });
+                        console.log(response_searchs);
+                    }
+                    
+                    return response_searchs;
+                });
+                try {
+                    await newPage.close();
+                } catch (err) {
+                    console.log("Except force close page 11");
+                    return {"id": browser_id, "status": false, "message": "Connection error or refreshed. ERR: " + err, "data": []};
+                }
+                return {"id": browser_id, "status": true, "message": "Get data successful", "data": datas};
+            } catch (err) {
+                
+                if (browser_id in browsers) {
+                    try {
+                        await newPage.close();
+                    } catch (err) {
+                        console.log("Except force close page 11");
+                    }
+                }
+                return {"id": browser_id, "status": false, "message": "Connection error or refreshed. ERR: " + err, "data": []};
+                    
+            }
+            // await newPage.close();
+        }
+    }
+}
+
 // Lấy thông báo theo id document
 var search_document_result =  async (req, res) => {
 
@@ -1497,4 +1698,4 @@ var close_browser = async (req, res) => {
 };
 
 
-module.exports = {init_browser, init_login, user_info, search_document, search_document_result, close_browser, upload_attachment, upload_file}
+module.exports = {init_browser, init_login, user_info, search_document, search_document_result, close_browser, upload_attachment, upload_file, get_account_tax_information}

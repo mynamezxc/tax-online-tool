@@ -1,8 +1,16 @@
 require('dotenv').config({ path: __dirname + '/../.env' });
 var tax = require("./app/tax");
+var api = require("./app/api");
 // var bhxh = require("./app/bhxh");
 
 module.exports = function (app) {
+
+    // Tax APIs
+    app.post("/api/token/changePassword", async (req, res) => {
+        // Trigger change password from localhost:3000 Signer api
+        var response = await api.change_token_password(req, res);
+        res.send(response);
+    });
 
     // Tax online
     // Open browser
@@ -22,6 +30,10 @@ module.exports = function (app) {
         var response = await tax.user_info(req, res);
         res.send(response);
 	});
+    app.get('/tax-info/:browser_id', async (req, res) => {
+        var response = await tax.get_account_tax_information(req, res);
+        res.send(response);
+    });
 
     // Search
     app.get(["/search-document/:browser_id/:from_date/:to_date/:transaction_id", "/search-document/:browser_id/:from_date/:to_date"], async (req, res) => {

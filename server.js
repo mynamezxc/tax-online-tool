@@ -4,7 +4,7 @@ require('dotenv').config({ path: __dirname + '/.env' });
 
 var app = express();
 const port = process.env.APP_PORT;
-app.use(express.static('public'));
+app.use(express.static(__dirname +'/public'));
 app.use(bodyParser.json({limit: '50mb', extended: true}))
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}))
 app.use(bodyParser.text({limit: '50mb', type: 'text/plain'}));
