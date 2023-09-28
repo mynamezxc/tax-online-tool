@@ -113,7 +113,8 @@ async function is_expired(browser, session) {
     await newPage.setViewport({ width: 1366, height: 768});
     await newPage.goto(url);
     // await newPage.waitForNavigation();
-    await delay(3000);
+    // await delay(3000);
+    // await waitForLoad(newPage, 500);
     content = await newPage.content();
     if (content.search("Phiên giao dịch hết hạn") != -1 || content.search("Error 500: java.lang.NullPointerException") != -1) {
         return true
@@ -616,7 +617,7 @@ var search_document = async (req, res) => {
             try {
                 var url = "https://thuedientu.gdt.gov.vn/etaxnnt/Request?&dse_sessionId="+session+"&dse_applicationId=-1&dse_pageId=8&dse_operationName=traCuuToKhaiProc&dse_processorState=initial&dse_nextEventName=start#!"
                 var newPage = await browsers[browser_id].newPage();
-                const downloadPath = path.resolve(__dirname.replace("\\", "/") + '/../public/files');
+                const downloadPath = path.resolve(__dirname.replace("\\", "/") + '/../public/files/');
                 await newPage._client.send('Page.setDownloadBehavior', {
                     behavior: 'allow',
                     downloadPath: downloadPath 
@@ -635,7 +636,8 @@ var search_document = async (req, res) => {
                     validateForm();
                 }, from_date, to_date, transaction_id);
 
-                await delay(3000);
+                // await delay(3000);
+                await waitForLoad(newPage, 800);
 
                 var dse_processorId = await newPage.evaluate(async () => {
                     return document.querySelector("input[name='dse_processorId']").value;
@@ -658,6 +660,7 @@ var search_document = async (req, res) => {
                 }
 
                 await delay(3000);
+                // await waitForLoad(newPage, 800);
                 
                 // var search_results = [];
                 if (search_page <= total_page) {
@@ -706,15 +709,36 @@ var search_document = async (req, res) => {
                                 }
                             }
                         }, datas[i]["id"]);
-                        await delay(500);
-                        if (fs.existsSync(downloadPath + "/ETAX"+ datas[i]["id"] + ".xml")) {
-                            datas[i]["file"] = fs.readFileSync(downloadPath + "/ETAX"+ datas[i]["id"] + ".xml", {encoding: 'base64'});
-                            fs.unlinkSync(downloadPath + "/ETAX"+ datas[i]["id"] + ".xml");
-                        }
-                        // Close
-                        delete datas[i]["processorId"];
+                        // await delay(1000);
+                        datas[i]["file"] = "";
                         
                     }
+
+                    let delayTime = 0;
+                    let delayInterval = 500;
+                    let looped = false;
+                    let maxDelayTime = 180000; // 3mins
+                    do {
+                        console.log("Start new loop. Max delay time: " + maxDelayTime / 1000 - delayTime / 1000);
+                        looped = false;
+                        for (var i = 0; i < datas.length; i++) {
+                            if (datas[i]["file"] == "" || typeof(datas[i]["processorId"]) != "undefined") {
+                                
+                                if (fs.existsSync(downloadPath + "/ETAX"+ datas[i]["id"] + ".xml")) {
+                                    datas[i]["file"] = fs.readFileSync(downloadPath + "/ETAX"+ datas[i]["id"] + ".xml", {encoding: 'base64'});
+                                    fs.unlinkSync(downloadPath + "/ETAX" + datas[i]["id"] + ".xml");
+                                    delete datas[i]["processorId"];
+                                }
+                                looped = true;
+                                await delay(delayInterval);
+                                delayTime += delayInterval;
+                                console.log("Waiting for download file num ", i + 1);
+                            }
+                        }
+                    } while (delayTime <= maxDelayTime && looped);
+
+                    console.log("Download done");
+                    
                 } else {
                     datas = [];
                 }
@@ -728,10 +752,11 @@ var search_document = async (req, res) => {
                     }
                 }
                 // await newPage.close();
+                // console.log(datas);
                 return {"id": browser_id, "status": true, "message": "Search success", "current_page": parseInt(search_page), "total_page": parseInt(total_page), "results": datas};
 
             } catch (err) {
-
+                console.Console.log(err);
                 if (browser_id in browsers) {
                     try {
                         await newPage.close();
