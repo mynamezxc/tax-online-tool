@@ -213,7 +213,7 @@ async function fillCaptchaAndLogin(browser_id, captcha, username, password) {
         try {
             await browsers[browser_id].close();
         } catch (err) {
-            console.log("Except force close browser");
+            console.log("Except force close browser 1");
         }
         return {status: false, msg: "eSigner Java is not running"};
     }
@@ -663,7 +663,7 @@ var search_document = async (req, res) => {
                 // await waitForLoad(newPage, 800);
                 
                 // var search_results = [];
-                if (search_page <= total_page) {
+                if (parseInt(search_page) <= parseInt(total_page)) {
 
                     var datas = await newPage.evaluate(async () => {
                         var response_searchs = [];
@@ -756,7 +756,7 @@ var search_document = async (req, res) => {
                 return {"id": browser_id, "status": true, "message": "Search success", "current_page": parseInt(search_page), "total_page": parseInt(total_page), "results": datas};
 
             } catch (err) {
-                console.Console.log(err);
+                console.log(err);
                 if (browser_id in browsers) {
                     try {
                         await newPage.close();
