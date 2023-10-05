@@ -134,7 +134,7 @@ async function is_expired(browser, session) {
 async function createBrowser(id) {
     const browser = await puppeteer.launch(
         {
-            args: browser_options, headless: true, Devtools: false
+            args: browser_options, headless: false, Devtools: false
         }
     );
     try {
@@ -536,6 +536,7 @@ var search_document = async (req, res) => {
     var to_date = req.params.to_date;
     var search_page = req.query.page ? req.query.page : 1;
     var total_page = 1;
+    var total_record = 0;
     var transaction_id = "";
     if ("transaction_id" in req.params) {
         transaction_id = req.params.transaction_id;
@@ -652,6 +653,13 @@ var search_document = async (req, res) => {
                     }
                 }
 
+                matches = content.match(/Có <b>([0-9]+)<\/b> bản ghi./); // get max page in string "gotoPage(29, 'gotoPageNO_listTKhai');"
+                if (matches.length >= 2) {
+                    if (Number.isInteger(parseInt(matches[1]))) {
+                        total_record = matches[1];
+                    }
+                }
+
                 if (parseInt(search_page) != 1 && parseInt(search_page) <= parseInt(total_page)) {
                     url = "https://thuedientu.gdt.gov.vn/etaxnnt/Request?dse_sessionId="+session+"&dse_applicationId=-1&dse_operationName=traCuuToKhaiProc&dse_pageId=13&dse_processorState=viewTraCuuTkhai&dse_processorId="+dse_processorId+"&dse_errorPage=error_page.jsp&dse_nextEventName=query&&pn=" + search_page;
                     await newPage.goto(url);
@@ -753,7 +761,7 @@ var search_document = async (req, res) => {
                 }
                 // await newPage.close();
                 // console.log(datas);
-                return {"id": browser_id, "status": true, "message": "Search success", "current_page": parseInt(search_page), "total_page": parseInt(total_page), "results": datas};
+                return {"id": browser_id, "status": true, "message": "Search success", "current_page": parseInt(search_page), "total_page": parseInt(total_page), "total_record": total_record, "results": datas};
 
             } catch (err) {
                 console.log(err);
@@ -847,6 +855,10 @@ var user_info = async (req, res) => {
         });
         await newPage.setViewport({ width: 1366, height: 768});
         await newPage.goto(url);
+        
+        var tax_element = await page.$(".text_den");
+        var tax_id = await page.evaluate(tax_element => tax_element.textContent, tax_element);
+        
 
         // await delay(3000);
         content = await newPage.content();
@@ -958,6 +970,10 @@ var user_info = async (req, res) => {
                     });
                     return response_searchs;
                 });
+                datas["detail"].push({
+                    key_name: "tax_id",
+                    key_value: tax_id,
+                })
             } catch (err) {
                 console.log("Error occurred 4");
             }
